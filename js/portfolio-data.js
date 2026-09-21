@@ -22,13 +22,17 @@ export const PORTFOLIO_DATA = {
     location: "Global / Remote",
     experienceYears: "3+",
     avatar: "images/abdurraheem.jpg",
+    logo: "images/logo.svg",
+    logoHorizontal: "images/logo-horizontal.svg",
   },
 
   // 2. Direct Contact & Social Links
   contact: {
     email: "hello@abdurraheem.com",
-    whatsapp: "+923000000000",
-    whatsappDisplay: "+92 300 0000000",
+    phone: "03297898969",
+    phoneDisplay: "0329 7898969",
+    whatsapp: "+923297898969",
+    whatsappDisplay: "0329 7898969",
     instagram: "https://instagram.com/AbdurRaheem_Web",
     instagramHandle: "@AbdurRaheem_Web",
     linkedin: "https://linkedin.com/in/abdurraheem",
