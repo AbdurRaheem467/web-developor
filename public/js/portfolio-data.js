@@ -21,6 +21,7 @@ export const PORTFOLIO_DATA = {
     availability: "Available for freelance & contract work",
     location: "Global / Remote",
     experienceYears: "3+",
+    avatar: "images/abdurraheem.jpg",
   },
 
   // 2. Direct Contact & Social Links
