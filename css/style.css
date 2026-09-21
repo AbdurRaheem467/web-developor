@@ -1,158 +1,239 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@500;600;700&display=swap');
 
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES & THEME CONFIGURATION
+   ========================================================================== */
 :root {
-  --color-gold: #d4af37;
-  --color-gold-light: #f3e5ab;
-  --color-gold-dark: #aa820a;
-  --color-bg-dark: #070709;
-  --color-card-dark: #121216;
+  --color-bg-base: #07090e;
+  --color-bg-surface: #0d121d;
+  --color-bg-card: #111726;
+  --color-bg-elevated: #182238;
+  
+  --color-primary: #6366f1;       /* Indigo */
+  --color-primary-light: #818cf8;
+  --color-cyan: #06b6d4;          /* Cyan */
+  --color-emerald: #10b981;       /* Emerald */
+  --color-amber: #f59e0b;         /* Amber */
+  
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(99, 102, 241, 0.35);
+  --color-text-main: #f8fafc;
+  --color-text-muted: #94a3b8;
+  
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* Custom Scrollbars */
+/* Smooth Scrolling & Sticky Header Offset */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* Offsets sticky 80px navbar */
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  overflow-x: hidden;
+  selection-background-color: #6366f1;
+  selection-color: #ffffff;
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.4);
+  color: #ffffff;
+}
+
+/* Custom Typography Utilities */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-code {
+  font-family: var(--font-mono);
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: #07090e;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 4px;
+  background: #1e293b;
+  border-radius: 9999px;
+  border: 2px solid #07090e;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4af37;
+  background: #4f46e5;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Background Grid Pattern */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #2d2d34;
-  border-radius: 3px;
+.bg-dots-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #d4af37;
+/* Glassmorphism Panels */
+.glass-nav {
+  background: rgba(7, 9, 14, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* Typography styles */
-.font-serif {
-  font-family: 'Cormorant Garamond', 'Cinzel', serif;
+.glass-card {
+  background: rgba(13, 18, 29, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.font-sans {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+.glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px -10px rgba(99, 102, 241, 0.12);
 }
 
-.font-mono {
-  font-family: 'JetBrains Mono', monospace;
+.glass-badge {
+  background: rgba(30, 41, 59, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Luxury Glow Effects */
-.text-glow {
-  text-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
+/* Gradient Text Accents */
+.text-gradient-primary {
+  background: linear-gradient(135deg, #ffffff 10%, #c7d2fe 60%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.box-glow {
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #38bdf8 0%, #06b6d4 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.bg-radial-vignette {
-  background: radial-gradient(circle at center, transparent 30%, #070709 95%);
+.text-gradient-amber {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Glow Effects */
+.glow-primary {
+  box-shadow: 0 0 30px -5px rgba(99, 102, 241, 0.35);
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.glow-cyan {
+  box-shadow: 0 0 35px -5px rgba(6, 182, 212, 0.3);
 }
 
-/* Product Image Magnifier zoom */
-#main-image-container {
+.glow-emerald {
+  box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.4);
+}
+
+/* Interactive Button Hover Physics */
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  box-shadow: 0 4px 20px -2px rgba(99, 102, 241, 0.4);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  box-shadow: 0 8px 26px -2px rgba(99, 102, 241, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Timeline Connection Line */
+.timeline-stem {
+  position: absolute;
+  top: 1.5rem;
+  bottom: 0;
+  left: 1.25rem;
+  width: 2px;
+  background: linear-gradient(to bottom, #6366f1, #06b6d4, #10b981);
+}
+
+@media (min-width: 768px) {
+  .timeline-stem-centered {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Project Card Image Container & Zoom */
+.project-card-image {
   overflow: hidden;
-  position: relative;
+  transition: transform 0.4s ease;
 }
 
-#pd-main-img {
-  transition: transform 0.25s ease-out;
-  transform-origin: center center;
+.project-card:hover .project-card-image img {
+  transform: scale(1.05);
 }
 
-/* Glassmorphism Classes */
-.glass-panel {
-  background: rgba(18, 18, 22, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.project-card-image img {
+  transition: transform 0.4s ease-out;
 }
 
-/* Range input luxury styling */
-input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #d4af37;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-  border: 2px solid #000;
+/* Modal Animations */
+@keyframes modalBackdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* Smooth selection */
-::selection {
-  background: #d4af37;
-  color: #000;
+@keyframes modalContentPopIn {
+  from { opacity: 0; transform: scale(0.95) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Print Styles */
-@media print {
-  header, footer, nav, button, .no-print {
-    display: none !important;
-  }
-  body {
-    background: #fff !important;
-    color: #000 !important;
-  }
-  #printable-receipt {
-    background: #fff !important;
-    color: #000 !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-  #printable-receipt * {
-    color: #000 !important;
-  }
+.modal-backdrop-animate {
+  animation: modalBackdropFadeIn 0.25s ease-out forwards;
 }
 
-/* ==========================================================================
-   Permanently Sticky Luxury Navigation Header
-   Keeps both Top Announcement Bar & Main Navigation locked at top on scroll
-   ========================================================================== */
-html, body {
-  overflow-x: clip;
+.modal-content-animate {
+  animation: modalContentPopIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-#navbar-root,
-#main-header {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 50 !important;
-  width: 100% !important;
+/* Pulse Beacon */
+@keyframes subtlePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.7; }
 }
 
-#main-header {
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+.animate-pulse-slow {
+  animation: subtlePulse 3s infinite ease-in-out;
 }
 
+/* Accessible Keyboard Focus Ring */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+}

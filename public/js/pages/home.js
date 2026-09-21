@@ -1,300 +1,278 @@
 /**
- * TIMEORA - Homepage
+ * SoundWave - Homepage Component
+ * Recreates the exact layout from the reference image:
+ * - Hero Header with Best Seller badge, yellow Earbuds title, 4 feature badges, Shop Now button, customer reviews proof, and hero earbuds image with "Small Size Big Sound" handwriting annotation arrow.
+ * - White Trust Banner (Free Shipping, Secure Payments, Easy Returns, 24/7 Support).
+ * - OUR BESTSELLERS section ("Top Picks for You") with 4 product cards.
+ * - "Why Choose SoundWave?" feature deep dive.
  */
 
 import { PRODUCTS } from "../data/products.js";
-import { COLLECTIONS } from "../data/collections.js";
 import { ProductCard } from "../components/productCard.js";
-import { FaqSection } from "../components/faqSection.js";
-import { store } from "../state/store.js";
-import { Storage } from "../state/storage.js";
 
 export class HomePage {
   static render() {
-    const newArrivals = PRODUCTS.filter(p => p.isNew).slice(0, 4);
     const bestSellers = PRODUCTS.filter(p => p.isBestSeller).slice(0, 4);
 
     return `
-      <div class="homepage space-y-24 md:space-y-32 pb-24">
+      <div class="w-full overflow-hidden">
         
-        <!-- Hero Section -->
-        <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#070709] border-b border-white/10">
+        <!-- 1. HERO SECTION (Dark Moody Aesthetic with Yellow Spotlight Glow) -->
+        <section class="relative bg-[#070709] pt-12 pb-20 lg:pt-16 lg:pb-28 text-white">
+          <!-- Background Ambient Glow -->
+          <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-[#FFC107]/15 rounded-full blur-[120px] pointer-events-none"></div>
           
-          <!-- Background Imagery & Atmosphere Lighting -->
-          <div class="absolute inset-0 z-0">
-            <img 
-              src="images/hero-bg.jpg" 
-              alt="TIMEORA Haute Horlogerie Luxury Watch Background" 
-              class="w-full h-full object-cover object-right md:object-center opacity-85 filter brightness-90 transition-opacity duration-700"
-            />
-            <div class="absolute inset-0 bg-gradient-to-r from-[#070709] via-[#070709]/80 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-[#070709] via-transparent to-[#070709]/60"></div>
-          </div>
-
-          <!-- Hero Content -->
-          <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-12 pb-20">
-            
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-[#d4af37]/40 backdrop-blur-md mb-8 animate-fade-in">
-              <span class="w-2 h-2 rounded-full bg-[#d4af37] animate-ping"></span>
-              <span class="text-xs uppercase tracking-[0.3em] text-[#d4af37] font-mono">The 2026 Manufacture Novelties</span>
-            </div>
-
-            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal text-white tracking-tight leading-[1.08] mb-6 drop-shadow-2xl">
-              TIMELESS DESIGN.<br/>
-              <span class="italic font-light text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f3e5ab] to-[#d4af37]">UNMATCHED PRECISION.</span>
-            </h1>
-
-            <p class="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-zinc-300 font-light leading-relaxed mb-10">
-              Discover watches crafted for those who value every second. Masterfully engineered in Switzerland with aerospace-grade metals and haute horlogerie tourbillons.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a 
-                href="#collection-mens" 
-                class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#c5a059] text-black font-semibold text-xs uppercase tracking-[0.2em] hover:brightness-110 active:scale-95 shadow-[0_10px_30px_rgba(212,175,55,0.3)] transition-all flex items-center justify-center gap-2"
-              >
-                <span>Shop Men's Watches</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </a>
-              <a 
-                href="#collection-womens" 
-                class="w-full sm:w-auto px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs uppercase tracking-[0.2em] border border-white/20 backdrop-blur-md transition-all flex items-center justify-center gap-2"
-              >
-                <span>Shop Women's Watches</span>
-              </a>
-            </div>
-
-            <!-- Horology Trust Badges -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-16 mt-16 border-t border-white/10 text-center max-w-4xl mx-auto">
-              <div>
-                <div class="font-serif text-2xl font-bold text-white tracking-wide">1928</div>
-                <div class="text-[11px] font-mono uppercase tracking-widest text-[#d4af37] mt-0.5">Swiss Heritage</div>
-              </div>
-              <div>
-                <div class="font-serif text-2xl font-bold text-white tracking-wide">COSC</div>
-                <div class="text-[11px] font-mono uppercase tracking-widest text-[#d4af37] mt-0.5">Certified Precision</div>
-              </div>
-              <div>
-                <div class="font-serif text-2xl font-bold text-white tracking-wide">5-Year</div>
-                <div class="text-[11px] font-mono uppercase tracking-widest text-[#d4af37] mt-0.5">Global Warranty</div>
-              </div>
-              <div>
-                <div class="font-serif text-2xl font-bold text-white tracking-wide">100%</div>
-                <div class="text-[11px] font-mono uppercase tracking-widest text-[#d4af37] mt-0.5">Hand-Finished</div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- Featured Collections Section -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <span class="text-xs font-mono uppercase tracking-[0.3em] text-[#d4af37] block mb-2">Curated Horizons</span>
-              <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">Featured Collections</h2>
-            </div>
-            <a href="#shop" class="text-xs uppercase tracking-[0.2em] text-[#d4af37] hover:text-white transition-colors flex items-center gap-1.5 self-start md:self-auto font-medium">
-              <span>View All 6 Collections</span>
-              <i data-lucide="chevron-right" class="w-4 h-4"></i>
-            </a>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <!-- Card 1: Luxury -->
-            <div class="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#121216] aspect-[4/5] flex flex-col justify-end p-6 hover:border-[#d4af37]/60 transition-all duration-500 shadow-xl">
-              <img 
-                src="${COLLECTIONS.luxury.image}" 
-                alt="Luxury Collection" 
-                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-              <div class="relative z-10 space-y-2">
-                <span class="text-[10px] font-mono uppercase tracking-widest text-[#d4af37] bg-black/60 px-2.5 py-1 rounded-full border border-white/10 backdrop-blur-md inline-block">Haute Horlogerie</span>
-                <h3 class="font-serif text-2xl font-bold text-white">Luxury Collection</h3>
-                <p class="text-xs text-zinc-300 line-clamp-2 leading-relaxed font-light">${COLLECTIONS.luxury.description}</p>
-                <a href="#collection-luxury" class="inline-flex items-center gap-2 pt-2 text-xs font-semibold uppercase tracking-widest text-[#d4af37] group-hover:text-white transition-colors">
-                  <span>Explore Collection</span>
-                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- Card 2: Classic -->
-            <div class="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#121216] aspect-[4/5] flex flex-col justify-end p-6 hover:border-[#d4af37]/60 transition-all duration-500 shadow-xl">
-              <img 
-                src="${COLLECTIONS.classic.image}" 
-                alt="Classic Collection" 
-                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-              <div class="relative z-10 space-y-2">
-                <span class="text-[10px] font-mono uppercase tracking-widest text-[#d4af37] bg-black/60 px-2.5 py-1 rounded-full border border-white/10 backdrop-blur-md inline-block">Timeless Lineage</span>
-                <h3 class="font-serif text-2xl font-bold text-white">Classic Collection</h3>
-                <p class="text-xs text-zinc-300 line-clamp-2 leading-relaxed font-light">${COLLECTIONS.classic.description}</p>
-                <a href="#collection-classic" class="inline-flex items-center gap-2 pt-2 text-xs font-semibold uppercase tracking-widest text-[#d4af37] group-hover:text-white transition-colors">
-                  <span>Explore Collection</span>
-                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- Card 3: Sport -->
-            <div class="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#121216] aspect-[4/5] flex flex-col justify-end p-6 hover:border-[#d4af37]/60 transition-all duration-500 shadow-xl">
-              <img 
-                src="${COLLECTIONS.sport.image}" 
-                alt="Sport Collection" 
-                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-              <div class="relative z-10 space-y-2">
-                <span class="text-[10px] font-mono uppercase tracking-widest text-[#d4af37] bg-black/60 px-2.5 py-1 rounded-full border border-white/10 backdrop-blur-md inline-block">High Octane</span>
-                <h3 class="font-serif text-2xl font-bold text-white">Sport Collection</h3>
-                <p class="text-xs text-zinc-300 line-clamp-2 leading-relaxed font-light">${COLLECTIONS.sport.description}</p>
-                <a href="#collection-sport" class="inline-flex items-center gap-2 pt-2 text-xs font-semibold uppercase tracking-widest text-[#d4af37] group-hover:text-white transition-colors">
-                  <span>Explore Collection</span>
-                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- Card 4: Minimal -->
-            <div class="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#121216] aspect-[4/5] flex flex-col justify-end p-6 hover:border-[#d4af37]/60 transition-all duration-500 shadow-xl">
-              <img 
-                src="${COLLECTIONS.minimal.image}" 
-                alt="Minimal Collection" 
-                class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-              <div class="relative z-10 space-y-2">
-                <span class="text-[10px] font-mono uppercase tracking-widest text-[#d4af37] bg-black/60 px-2.5 py-1 rounded-full border border-white/10 backdrop-blur-md inline-block">Pure Modern</span>
-                <h3 class="font-serif text-2xl font-bold text-white">Minimal Collection</h3>
-                <p class="text-xs text-zinc-300 line-clamp-2 leading-relaxed font-light">${COLLECTIONS.minimal.description}</p>
-                <a href="#collection-minimal" class="inline-flex items-center gap-2 pt-2 text-xs font-semibold uppercase tracking-widest text-[#d4af37] group-hover:text-white transition-colors">
-                  <span>Explore Collection</span>
-                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- New Horological Arrivals Grid -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <span class="text-xs font-mono uppercase tracking-[0.3em] text-[#d4af37] block mb-2">2026 Novelties</span>
-              <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">New Arrivals</h2>
-            </div>
-            <a href="#collection-new" class="text-xs uppercase tracking-[0.2em] text-[#d4af37] hover:text-white transition-colors flex items-center gap-1.5 self-start md:self-auto font-medium">
-              <span>View All Novelties</span>
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="home-new-arrivals-grid">
-            ${newArrivals.map(p => ProductCard.render(p)).join("")}
-          </div>
-        </section>
-
-        <!-- Promotional Haute Horlogerie Banner -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="relative rounded-3xl overflow-hidden border border-[#d4af37]/40 bg-gradient-to-r from-[#0b0b0e] via-[#161410] to-[#0b0b0e] p-8 sm:p-12 lg:p-16 shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
-            
-            <div class="absolute inset-0 opacity-25">
-              <img 
-                src="https://images.unsplash.com/photo-1547996160-71dfabbce5ed?auto=format&fit=crop&w=1600&q=80" 
-                alt="TIMEORA Banner" 
-                class="w-full h-full object-cover object-right"
-              />
-              <div class="absolute inset-0 bg-gradient-to-r from-[#0b0b0e] via-[#0b0b0e]/80 to-transparent"></div>
-            </div>
-
-            <div class="relative z-10 max-w-xl space-y-6">
-              <span class="inline-block px-3 py-1 rounded-full text-[10px] uppercase font-mono tracking-[0.3em] bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40">
-                Maison Philosophy
-              </span>
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               
-              <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-tight">
-                “TIME IS YOUR MOST VALUABLE ASSET.”
-              </h2>
+              <!-- Left Column: Copy & Value Proposition -->
+              <div class="lg:col-span-7 space-y-6 text-left">
+                
+                <!-- Best Seller Pill Badge -->
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC107]/15 border border-[#FFC107]/40 text-[#FFC107] text-xs font-bold uppercase tracking-wider">
+                  <span>🔥 Best Seller</span>
+                </div>
 
-              <p class="text-sm text-zinc-300 leading-relaxed font-light">
-                Each TIMEORA creation is an ode to human ingenuity, taking upwards of 250 hours of meticulous hand-engraving, bevelling, and chronometric calibration in our Swiss ateliers.
-              </p>
+                <!-- Main Hero Headline -->
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
+                  Premium Wireless <br/>
+                  <span class="text-[#FFC107] drop-shadow-[0_0_25px_rgba(255,193,7,0.3)]">Earbuds</span>
+                </h1>
 
-              <div class="pt-2">
-                <a 
-                  href="#shop" 
-                  class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#c5a059] text-black font-semibold text-xs uppercase tracking-[0.2em] hover:brightness-110 active:scale-95 shadow-[0_10px_30px_rgba(212,175,55,0.3)] transition-all"
-                >
-                  <span>Explore Collection</span>
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+                <!-- Subtitle -->
+                <p class="text-zinc-300 text-base sm:text-lg max-w-xl leading-relaxed">
+                  Crystal clear sound. All-day comfort. <br class="hidden sm:inline"/>
+                  Take your music, calls and lifestyle to the next level.
+                </p>
+
+                <!-- 4 Feature Badges Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-3 border-y border-white/10 max-w-2xl">
+                  <div class="flex items-center gap-2.5">
+                    <div class="p-2 rounded-lg bg-white/5 text-[#FFC107] shrink-0">
+                      <i data-lucide="waves" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-zinc-200 leading-tight">Hi-Fi Sound Quality</span>
+                  </div>
+
+                  <div class="flex items-center gap-2.5">
+                    <div class="p-2 rounded-lg bg-white/5 text-[#FFC107] shrink-0">
+                      <i data-lucide="battery-charging" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-zinc-200 leading-tight">Long Battery Life (Up to 32H)</span>
+                  </div>
+
+                  <div class="flex items-center gap-2.5">
+                    <div class="p-2 rounded-lg bg-white/5 text-[#FFC107] shrink-0">
+                      <i data-lucide="droplets" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-zinc-200 leading-tight">Water & Sweat Resistant</span>
+                  </div>
+
+                  <div class="flex items-center gap-2.5">
+                    <div class="p-2 rounded-lg bg-white/5 text-[#FFC107] shrink-0">
+                      <i data-lucide="feather" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-zinc-200 leading-tight">Lightweight & Comfortable</span>
+                  </div>
+                </div>
+
+                <!-- Call To Action Button -->
+                <div class="pt-2">
+                  <a 
+                    href="#shop" 
+                    class="inline-flex items-center gap-3 bg-[#FFC107] hover:bg-[#E0A800] text-black font-extrabold text-base px-8 py-4 rounded-full shadow-[0_0_30px_rgba(255,193,7,0.4)] transition-all duration-300 transform hover:-translate-y-0.5"
+                  >
+                    <span>Shop Now</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5 stroke-[3]"></i>
+                  </a>
+                </div>
+
+                <!-- Customer Reviews Proof Row -->
+                <div class="flex items-center gap-4 pt-4">
+                  <!-- Avatars -->
+                  <div class="flex -space-x-2 overflow-hidden">
+                    <img class="inline-block h-9 w-9 rounded-full ring-2 ring-black" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Customer 1"/>
+                    <img class="inline-block h-9 w-9 rounded-full ring-2 ring-black" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Customer 2"/>
+                    <img class="inline-block h-9 w-9 rounded-full ring-2 ring-black" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Customer 3"/>
+                    <img class="inline-block h-9 w-9 rounded-full ring-2 ring-black" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" alt="Customer 4"/>
+                  </div>
+                  <!-- Rating Text -->
+                  <div class="flex flex-col text-xs">
+                    <span class="font-bold text-white text-sm">+10,000 Happy Customers</span>
+                    <div class="flex items-center text-[#FFC107]">
+                      <i data-lucide="star" class="w-3.5 h-3.5 fill-[#FFC107]"></i>
+                      <i data-lucide="star" class="w-3.5 h-3.5 fill-[#FFC107]"></i>
+                      <i data-lucide="star" class="w-3.5 h-3.5 fill-[#FFC107]"></i>
+                      <i data-lucide="star" class="w-3.5 h-3.5 fill-[#FFC107]"></i>
+                      <i data-lucide="star" class="w-3.5 h-3.5 fill-[#FFC107]"></i>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-            </div>
 
+              <!-- Right Column: Hero Product Showcase Image & Annotation -->
+              <div class="lg:col-span-5 relative flex justify-center items-center">
+                
+                <!-- Product Graphic Container -->
+                <div class="relative w-full max-w-lg aspect-square flex items-center justify-center">
+                  <img 
+                    src="images/products/hero-earbuds.svg" 
+                    alt="SoundWave Wireless Earbuds" 
+                    class="w-full h-full object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)]"
+                  />
+
+                  <!-- Handwritten Arrow Annotation "Small Size Big Sound" -->
+                  <div class="absolute top-12 right-0 sm:-right-4 flex flex-col items-center pointer-events-none select-none z-20">
+                    <span class="font-handwriting text-2xl sm:text-3xl text-[#FFC107] font-bold tracking-wide transform -rotate-12 drop-shadow-md">
+                      Small Size <br/> Big Sound
+                    </span>
+                    <!-- Curved Yellow Arrow SVG -->
+                    <svg class="w-16 h-16 text-[#FFC107] stroke-current fill-none transform rotate-45 -mt-2" viewBox="0 0 100 100">
+                      <path d="M 20 80 Q 50 10 90 40" stroke="#FFC107" stroke-width="4" stroke-linecap="round"/>
+                      <path d="M 75 25 L 90 40 L 70 50" stroke="#FFC107" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
           </div>
         </section>
 
-        <!-- Best Sellers Showcase -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <span class="text-xs font-mono uppercase tracking-[0.3em] text-[#d4af37] block mb-2">Iconic Timepieces</span>
-              <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">Best Sellers</h2>
-            </div>
-            <a href="#shop" class="text-xs uppercase tracking-[0.2em] text-[#d4af37] hover:text-white transition-colors flex items-center gap-1.5 self-start md:self-auto font-medium">
-              <span>Explore Complete Gallery</span>
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
-          </div>
+        <!-- 2. TRUST & VALUE PROPOSITION BANNER (White Strip) -->
+        <section class="bg-white border-y border-zinc-200 py-8 text-zinc-800">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              
+              <!-- Item 1 -->
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-zinc-50/80 border border-zinc-100">
+                <div class="p-3 rounded-xl bg-[#070709] text-[#FFC107]">
+                  <i data-lucide="truck" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-sm text-zinc-900">Free Shipping</h4>
+                  <p class="text-xs text-zinc-500">On all orders over $50</p>
+                </div>
+              </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="home-best-sellers-grid">
-            ${bestSellers.map(p => ProductCard.render(p)).join("")}
+              <!-- Item 2 -->
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-zinc-50/80 border border-zinc-100">
+                <div class="p-3 rounded-xl bg-[#070709] text-[#FFC107]">
+                  <i data-lucide="shield-check" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-sm text-zinc-900">Secure Payments</h4>
+                  <p class="text-xs text-zinc-500">100% protected checkout</p>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-zinc-50/80 border border-zinc-100">
+                <div class="p-3 rounded-xl bg-[#070709] text-[#FFC107]">
+                  <i data-lucide="rotate-ccw" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-sm text-zinc-900">Easy Returns</h4>
+                  <p class="text-xs text-zinc-500">30 days money back</p>
+                </div>
+              </div>
+
+              <!-- Item 4 -->
+              <div class="flex items-center gap-4 p-3 rounded-xl bg-zinc-50/80 border border-zinc-100">
+                <div class="p-3 rounded-xl bg-[#070709] text-[#FFC107]">
+                  <i data-lucide="headphone-off" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-sm text-zinc-900">24/7 Support</h4>
+                  <p class="text-xs text-zinc-500">We're here to help</p>
+                </div>
+              </div>
+
+            </div>
           </div>
         </section>
 
-        <!-- Master Craftsmanship Pillars -->
-        <section class="bg-[#0b0b0e] py-20 border-y border-white/10">
+        <!-- 3. OUR BESTSELLERS SECTION (Light Background with Top Picks Card Grid) -->
+        <section class="bg-zinc-100 py-16 lg:py-24 text-zinc-900">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div class="text-center max-w-2xl mx-auto mb-16">
-              <span class="text-xs font-mono uppercase tracking-[0.3em] text-[#d4af37] block mb-2">Horological Integrity</span>
-              <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-white">The Pinnacle of Watchmaking Art</h2>
+            <!-- Section Header -->
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
+              <span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+                — OUR BESTSELLERS —
+              </span>
+              <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-900">
+                Top Picks for You
+              </h2>
+              <p class="text-sm text-zinc-600">
+                Premium quality. Unbeatable prices. Limited time deals.
+              </p>
+            </div>
+
+            <!-- Bestsellers 4-Column Product Grid -->
+            <div id="bestsellers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              ${bestSellers.map(product => ProductCard.render(product)).join("")}
+            </div>
+
+            <!-- View All Products CTA -->
+            <div class="mt-12 text-center">
+              <a href="#shop" class="inline-flex items-center gap-2 bg-[#070709] hover:bg-[#FFC107] text-white hover:text-black font-bold text-sm py-3.5 px-8 rounded-full shadow-lg transition-all duration-300">
+                <span>View Full Catalog</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- 4. WHY CHOOSE SOUNDWAVE? SECTION (Dark Interactive Highlights) -->
+        <section class="bg-[#0a0a0d] py-20 text-white border-t border-white/10 relative overflow-hidden">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+              <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                Why Choose <span class="text-[#FFC107]">SoundWave</span>?
+              </h2>
+              <p class="text-zinc-400 text-sm">
+                Engineered with cutting-edge audio drivers and acoustic precision for music lovers.
+              </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
               
-              <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#d4af37]/40 transition-colors">
-                <div class="w-12 h-12 rounded-xl bg-[#d4af37]/15 border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] mb-6">
-                  <i data-lucide="compass" class="w-6 h-6"></i>
+              <!-- Card 1 -->
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-[#FFC107]/50 transition-all group">
+                <div class="w-14 h-14 rounded-2xl bg-[#FFC107]/15 border border-[#FFC107]/30 flex items-center justify-center text-[#FFC107] mb-6 group-hover:scale-110 transition-transform">
+                  <i data-lucide="volume-2" class="w-7 h-7"></i>
                 </div>
-                <h3 class="font-serif text-xl font-bold text-white mb-3">COSC Chronometer Calibres</h3>
-                <p class="text-xs text-zinc-400 leading-relaxed">
-                  Independently tested under 5 positions and varying temperatures over 15 consecutive days in Switzerland, ensuring supreme chronometric precision of -2/+2 seconds per day.
+                <h3 class="text-xl font-bold mb-3 text-white">42dB Active Noise Cancelling</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed">
+                  Block out unwanted background noise with hybrid microphones that analyze ambient sound in real time.
                 </p>
               </div>
 
-              <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#d4af37]/40 transition-colors">
-                <div class="w-12 h-12 rounded-xl bg-[#d4af37]/15 border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] mb-6">
-                  <i data-lucide="gem" class="w-6 h-6"></i>
+              <!-- Card 2 -->
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-[#FFC107]/50 transition-all group">
+                <div class="w-14 h-14 rounded-2xl bg-[#FFC107]/15 border border-[#FFC107]/30 flex items-center justify-center text-[#FFC107] mb-6 group-hover:scale-110 transition-transform">
+                  <i data-lucide="battery-charging" class="w-7 h-7"></i>
                 </div>
-                <h3 class="font-serif text-xl font-bold text-white mb-3">Noble Precious Metals</h3>
-                <p class="text-xs text-zinc-400 leading-relaxed">
-                  Only responsibly sourced 18K ethical gold, 950 pure platinum, and aerospace grade 5 titanium are selected to sculpt cases that endure across generations.
+                <h3 class="text-xl font-bold mb-3 text-white">Up to 50 Hours Battery</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed">
+                  Enjoy days of uninterrupted listening. Fast charge 10 minutes for 2 full hours of playback.
                 </p>
               </div>
 
-              <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#d4af37]/40 transition-colors">
-                <div class="w-12 h-12 rounded-xl bg-[#d4af37]/15 border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] mb-6">
-                  <i data-lucide="shield" class="w-6 h-6"></i>
+              <!-- Card 3 -->
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-[#FFC107]/50 transition-all group">
+                <div class="w-14 h-14 rounded-2xl bg-[#FFC107]/15 border border-[#FFC107]/30 flex items-center justify-center text-[#FFC107] mb-6 group-hover:scale-110 transition-transform">
+                  <i data-lucide="shield" class="w-7 h-7"></i>
                 </div>
-                <h3 class="font-serif text-xl font-bold text-white mb-3">5-Year Global Guarantee</h3>
-                <p class="text-xs text-zinc-400 leading-relaxed">
-                  Every TIMEORA timepiece comes accompanied by a signed physical manufacture certificate and 5 years of complimentary international servicing and ultrasonic cleaning.
+                <h3 class="text-xl font-bold mb-3 text-white">IPX8 Sweat & Water Protection</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed">
+                  Hydrophobic nano-coating protects internal electronics against rain, splashes, and sweat during workouts.
                 </p>
               </div>
 
@@ -302,86 +280,15 @@ export class HomePage {
 
           </div>
         </section>
-
-        <!-- Customer Reviews Section -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center max-w-2xl mx-auto mb-16">
-            <span class="text-xs font-mono uppercase tracking-[0.3em] text-[#d4af37] block mb-2">Collector Testimonials</span>
-            <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-white">Words From Our Connoisseurs</h2>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div class="p-8 rounded-2xl bg-gradient-to-b from-[#141418] to-[#0e0e11] border border-white/10 shadow-xl flex flex-col justify-between">
-              <div>
-                <div class="flex text-amber-400 gap-1 mb-4">
-                  ${Array(5).fill(0).map(() => `<i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>`).join("")}
-                </div>
-                <h4 class="font-serif text-base font-semibold text-white mb-2">“Unrivaled mechanical artistry.”</h4>
-                <p class="text-xs text-zinc-300 leading-relaxed">
-                  The Celestial Tourbillon Sovereign is a true horological milestone. The depth of the openwork bridges and the precision of the flying tourbillon is simply hypnotic.
-                </p>
-              </div>
-              <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-                <div>
-                  <p class="text-xs font-semibold text-white">Lord Alexander Vance</p>
-                  <p class="text-[10px] text-[#d4af37] font-mono">Purchased: Celestial Tourbillon</p>
-                </div>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Verified Buyer</span>
-              </div>
-            </div>
-
-            <div class="p-8 rounded-2xl bg-gradient-to-b from-[#141418] to-[#0e0e11] border border-white/10 shadow-xl flex flex-col justify-between">
-              <div>
-                <div class="flex text-amber-400 gap-1 mb-4">
-                  ${Array(5).fill(0).map(() => `<i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>`).join("")}
-                </div>
-                <h4 class="font-serif text-base font-semibold text-white mb-2">“Pure poetry on the wrist.”</h4>
-                <p class="text-xs text-zinc-300 leading-relaxed">
-                  The Elysian Pure Rose is so ultra-thin that it feels weightless. The mother-of-pearl dial catches evening dinner lighting with an ethereal iridescence.
-                </p>
-              </div>
-              <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-                <div>
-                  <p class="text-xs font-semibold text-white">Victoria De Laurentis</p>
-                  <p class="text-[10px] text-[#d4af37] font-mono">Purchased: Elysian Pure Rose</p>
-                </div>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Verified Buyer</span>
-              </div>
-            </div>
-
-            <div class="p-8 rounded-2xl bg-gradient-to-b from-[#141418] to-[#0e0e11] border border-white/10 shadow-xl flex flex-col justify-between">
-              <div>
-                <div class="flex text-amber-400 gap-1 mb-4">
-                  ${Array(5).fill(0).map(() => `<i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>`).join("")}
-                </div>
-                <h4 class="font-serif text-base font-semibold text-white mb-2">“Tested on deep sea dives.”</h4>
-                <p class="text-xs text-zinc-300 leading-relaxed">
-                  The Abyss Pro 1000M is built like an oceanic tank yet the grade 5 titanium keeps it balanced on the wrist. Outstanding bezel action and lume.
-                </p>
-              </div>
-              <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-                <div>
-                  <p class="text-xs font-semibold text-white">Captain Eric Lindqvist</p>
-                  <p class="text-[10px] text-[#d4af37] font-mono">Purchased: Abyss Pro 1000M</p>
-                </div>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Verified Buyer</span>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- FAQ Accordion Section -->
-        ${FaqSection.render()}
 
       </div>
     `;
   }
 
   static setupEvents() {
-    ProductCard.setupCardEvents(document.getElementById("home-new-arrivals-grid") || document);
-    ProductCard.setupCardEvents(document.getElementById("home-best-sellers-grid") || document);
-    FaqSection.setupEvents(document.getElementById("faq-section") || document);
+    const grid = document.getElementById("bestsellers-grid");
+    if (grid) {
+      ProductCard.setupCardEvents(grid);
+    }
   }
 }

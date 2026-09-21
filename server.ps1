@@ -1,6 +1,6 @@
-# TIMEORA - PowerShell Built-in Web Server (No Node.js or Python required)
+# Abdur Raheem - Web Developer & Designer Portfolio - PowerShell Local Server
 $port = 3000
-$root = Join-Path $PSScriptRoot "public"
+$root = $PSScriptRoot
 
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$port/")
@@ -8,10 +8,10 @@ $listener.Prefixes.Add("http://127.0.0.1:$port/")
 
 try {
     $listener.Start()
-    Write-Host "==========================================================" -ForegroundColor Yellow
-    Write-Host "TIMEORA Haute Horlogerie Website Server Running!" -ForegroundColor Yellow
-    Write-Host "Open in browser: http://localhost:$port" -ForegroundColor Cyan
-    Write-Host "==========================================================" -ForegroundColor Yellow
+    Write-Host "==========================================================" -ForegroundColor Cyan
+    Write-Host "Abdur Raheem | Web Developer & Designer Portfolio Server" -ForegroundColor Cyan
+    Write-Host "Open in browser: http://localhost:$port" -ForegroundColor Green
+    Write-Host "==========================================================" -ForegroundColor Cyan
     Write-Host "Press Ctrl+C in this terminal to stop the server."
 
     # Open browser automatically

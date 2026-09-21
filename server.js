@@ -76,7 +76,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log(`\n======================================================`);
-  console.log(`⏳ TIMEORA Haute Horlogerie Web Store Running`);
+  console.log(`🚀 Abdur Raheem | Web Developer & Designer Portfolio`);
   console.log(`🌐 URL: http://localhost:${PORT}`);
   console.log(`======================================================\n`);
 });

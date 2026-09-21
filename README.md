@@ -1,79 +1,115 @@
-# ⏳ TIMEORA Haute Horlogerie — Luxury Watch E-Commerce Platform
+# 🚀 Abdur Raheem — Web Developer & Designer Portfolio
 
-> **“TIMELESS DESIGN. UNMATCHED PRECISION.”**  
-> An ultra-premium, production-ready e-commerce web application for luxury timepieces, tourbillons, chronographs, and grand complications.
-
----
-
-## 🌟 Highlights & Features
-
-- **Luxury Watch Aesthetic**: Bespoke dark luxury palette (obsidian `#070709`, brushed gold `#d4af37`, champagne highlights, Cormorant Garamond & Cinzel typography).
-- **28+ Handcrafted Timepieces**: Across prestigious watch houses (*TIMEORA Atelier*, *Chronos Royal*, *Veloce Genève*, *Elysium Haute*, *Aurelius & Co.*, *Nautilus Prime*).
-- **Interactive Global Search (`Ctrl + K`)**: Instant search overlay with trending horology tags, live auto-complete, and quick product cards.
-- **Multi-Faceted Shop Filtering & Sorting**:
-  - Filter by Category (Luxury, Classic, Sport, Minimal, Skeleton, Diver, Chronograph)
-  - Filter by Manufacture House / Brand
-  - Price Ceiling Slider ($5,000 – $60,000)
-  - Gender (Men, Women, Unisex)
-  - Case Metals (18K Rose Gold, 950 Platinum, Grade 5 Titanium, 316L Stainless Steel, Ceramic, Forged Carbon)
-  - Strap Materials (Alligator Leather, Milanese Mesh, FKM Rubber, Gold Links)
-  - 6 Sorting Modes (Featured, Newest 2026, Price: Low-High, Price: High-Low, Rating, Best Sellers)
-- **Product Details & Gallery**:
-  - Large multi-angle product gallery with hover zoom magnifier.
-  - Deep technical horological specifications table.
-  - Customer review submission form and verified reviews archive.
-- **Shopping Bag & Slide-Out Cart Drawer**:
-  - Real-time quantity controls, subtotal, and tax calculations.
-  - Privilege coupon code engine (`TIMEORA10` for 10% off, `LUXURY50` for $500 off, `GOLDEN20` for 20% off).
-  - Armored delivery courier selection.
-  - Persisted in `localStorage`.
-- **Private Wishlist**:
-  - One-click save to wishlist, item counts, and "Move All to Bag" action.
-- **End-to-End Checkout & Order Confirmation**:
-  - Multi-step checkout with address validation.
-  - Simulated payment options (Credit Card, Bank Wire, Vault COD).
-  - Official order number generation, delivery date estimation, and printable receipt.
-- **VIP Account Dashboard**:
-  - Live order tracking with 4-stage progress bars (*Atelier Registration* → *Chronometric Calibration* → *Armored Transit* → *Delivered*).
-  - Saved residences and addresses manager.
-  - Profile credentials editor.
-- **Brand Story & Boutique Concierge**:
-  - Swiss watchmaking heritage in Le Locle since 1928.
-  - Working contact form with instant validation.
-  - Global flagship boutique directory (Geneva, London, New York).
+> **“Building Digital Experiences That Stand Out.”**  
+> A premium, modern, and client-focused personal portfolio website crafted for freelance conversion, showcasing frontend architecture, responsive web design, and interactive web applications.
 
 ---
 
-## 🛠 Tech Stack & Architecture
+## 🌟 Overview & Highlights
 
-- **Frontend**: Modern HTML5, Tailwind CSS, Modern ES Modules (Vanilla JS / Web Components)
-- **Icons**: Lucide Icons
-- **Typography**: Cormorant Garamond, Cinzel, Plus Jakarta Sans, JetBrains Mono
-- **State Management**: Reactive Pub-Sub store with `localStorage` persistence
-- **Local Server**: Zero-dependency PowerShell HTTP server & Node.js static server
+- **Bespoke Modern Aesthetic**: High-end dark theme (`#07090e`, slate glass surfaces, subtle indigo `#6366f1` and cyan `#06b6d4` glowing accents).
+- **Interactive Developer IDE Visual**: Interactive Mac-style code editor and terminal mockup in the Hero section with syntax highlighting and live status indicators (no generic stock photos).
+- **Flagship Project Showcase**:
+  - **Watch Store Website**: E-commerce platform with clean product-focused interface, responsive design, and smooth shopping experience.
+  - **SaaS Analytics Dashboard**: Enterprise data visualization platform with real-time KPI streaming.
+  - **NovaTech Product Launch Page**: High-velocity landing page optimized for conversion rates.
+  - **Aura Artisan Bistro**: Modern restaurant web experience with reservation workflows.
+  - **SoundWave Audio Store**: Minimalist audio e-commerce experience.
+  - **Mono Minimalist Portfolio**: Editorial portfolio with micro-interactions.
+- **Dynamic Category Filtering**: Seamlessly filter between *All*, *Websites*, *E-Commerce*, and *Landing Pages*.
+- **Interactive Project Details Modal**: Deep case-study popups detailing project background, key deliverables, technologies used, live preview links, and source code links. Accessible via keyboard (`Esc`) and backdrop clicks.
+- **Client Services Section**:
+  1. Business Websites
+  2. E-Commerce Websites
+  3. Landing Pages
+  4. Website Redesign
+  5. Responsive Web Design
+  - Includes a 1-click *"Inquire About This Service"* button that auto-selects the service in the contact form and smoothly scrolls down.
+- **Development Journey Timeline**: Clean milestone progression from foundational learning to first projects, freelance work, and current full-stack evolution.
+- **Why Work With Me**: 6 client-centric value pillars emphasizing clean design, responsiveness, custom solutions, and transparent communication.
+- **Client Testimonials**: Editable testimonial cards with client roles, star ratings, and authentic feedback.
+- **Interactive Contact Funnel**:
+  - Full Name, Email, Project Type dropdown, and Message.
+  - Real-time client-side validation with regex and visual error states.
+  - Loading animation and animated submission confirmation overlay.
+  - Direct contact links for **Email**, **WhatsApp**, **Instagram**, **LinkedIn**, and **GitHub**.
+- **100% Responsive & Accessible**: Fluid navigation, sticky glass header, animated mobile drawer menu, semantic HTML5, keyboard focus rings, and SEO metadata (Open Graph & Twitter Cards).
+
+---
+
+## 🛠 Tech Stack
+
+- **HTML5**: Semantic hierarchy, accessible ARIA attributes, modern SEO metadata.
+- **Tailwind CSS**: Utility-first responsive design system, customized typography and color palette.
+- **Vanilla JavaScript (ES6+ Modules)**: Zero heavy dependencies, fast load times, modular architecture.
+- **Lucide Icons**: Crisp modern iconography for web components.
+- **Google Fonts**: Plus Jakarta Sans, Space Grotesk, JetBrains Mono.
+
+---
+
+## ⚙️ Centralized Configuration (`js/portfolio-data.js`)
+
+All personal information, links, skills, services, projects, milestones, and testimonials are managed in a single, user-friendly file:
+
+📁 `js/portfolio-data.js`
+
+To customize the portfolio with your own details:
+1. Open `js/portfolio-data.js` in your editor.
+2. Edit your name, bio, social handles, WhatsApp number, or email.
+3. Add or update projects, skills, or testimonials.
+4. Save the file — all changes appear instantly across the website!
 
 ---
 
 ## 🚀 Quick Start (Local Run)
 
 ### Option 1: One-Click Windows Launcher
-Double-click `OPEN_WEBSITE.bat` in the project root folder.
+Double-click **`OPEN_WEBSITE.bat`** in this folder. It will start the local server and open your default browser automatically.
 
 ### Option 2: PowerShell Server
+Run the built-in PowerShell web server:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\server.ps1
 ```
-Then visit: **`http://localhost:3000`**
+Open **`http://localhost:3000`** in your browser.
 
 ### Option 3: Node.js (If Installed)
 ```bash
 node server.js
 ```
+Open **`http://localhost:3000`** in your browser.
 
 ---
 
-## 📄 Repository Information
+## 📤 Push Changes to GitHub
 
-- **Repository**: [https://github.com/AbdurRaheem467/Abdurraheem](https://github.com/AbdurRaheem467/Abdurraheem)
+Run the included sync script:
+Double-click **`PUSH_TO_GITHUB.bat`** or run:
+```cmd
+.\PUSH_TO_GITHUB.bat
+```
+This automatically stages, commits, and pushes your changes to:
+[https://github.com/AbdurRaheem467/Abdurraheem](https://github.com/AbdurRaheem467/Abdurraheem)
+
+---
+
+## 🌐 Free One-Click Deployment
+
+### Deploy on Vercel:
+1. Go to [vercel.com](https://vercel.com).
+2. Import your GitHub repository `AbdurRaheem467/Abdurraheem`.
+3. Vercel will automatically detect `vercel.json` and deploy your site in seconds!
+
+### Deploy on GitHub Pages:
+1. Go to your GitHub repository **Settings** → **Pages**.
+2. Under **Build and deployment**, set Source to **Deploy from a branch**.
+3. Select branch **main** and folder **/ (root)**, then click **Save**.
+4. Your website will be live at `https://abdurraheem467.github.io/Abdurraheem/`!
+
+---
+
+## 📄 License & Attribution
+
 - **Author**: Abdur Raheem
+- **Role**: Web Developer & Designer
 - **License**: MIT

@@ -1,7 +1,7 @@
 @echo off
-title TIMEORA Haute Horlogerie Store
+title Abdur Raheem - Web Developer & Designer Portfolio
 echo ======================================================
-echo Starting TIMEORA Luxury Watch Store...
+echo Starting Abdur Raheem Portfolio Website Server...
 echo ======================================================
 powershell -ExecutionPolicy Bypass -File "%~dp0server.ps1"
 pause

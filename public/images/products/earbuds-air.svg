@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cardBgWhite" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8f9fa"/>
+      <stop offset="100%" stop-color="#e9ecef"/>
+    </linearGradient>
+    <linearGradient id="whiteCase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#f1f3f5"/>
+      <stop offset="100%" stop-color="#dee2e6"/>
+    </linearGradient>
+  </defs>
+  <rect width="500" height="500" rx="16" fill="url(#cardBgWhite)"/>
+  
+  <g transform="translate(50, 40)">
+    <!-- Shadow -->
+    <ellipse cx="200" cy="360" rx="110" ry="22" fill="#000" opacity="0.12" filter="blur(7px)"/>
+    
+    <!-- White Left Earbud Stem -->
+    <g transform="translate(130, 50)">
+      <rect x="20" y="80" width="13" height="95" rx="6.5" fill="#f8f9fa" stroke="#e9ecef" stroke-width="1"/>
+      <ellipse cx="26.5" cy="65" rx="19" ry="23" fill="#ffffff" stroke="#dee2e6" stroke-width="1"/>
+    </g>
+
+    <!-- White Right Earbud Stem -->
+    <g transform="translate(230, 50)">
+      <rect x="20" y="80" width="13" height="95" rx="6.5" fill="#f8f9fa" stroke="#e9ecef" stroke-width="1"/>
+      <ellipse cx="26.5" cy="65" rx="19" ry="23" fill="#ffffff" stroke="#dee2e6" stroke-width="1"/>
+    </g>
+
+    <!-- White Charging Case -->
+    <path d="M 105,210 C 105,170 140,160 200,160 C 260,160 295,170 295,210 L 295,310 C 295,350 260,365 200,365 C 140,365 105,350 105,310 Z" fill="url(#whiteCase)" stroke="#ced4da" stroke-width="1.5"/>
+    <!-- Lid Seam -->
+    <path d="M 108,220 C 150,208 250,208 292,220" fill="none" stroke="#ced4da" stroke-width="1.5"/>
+    <!-- LED Dot -->
+    <circle cx="200" cy="275" r="3.5" fill="#4dabf7"/>
+  </g>
+</svg>

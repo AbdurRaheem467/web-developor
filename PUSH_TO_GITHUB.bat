@@ -1,11 +1,11 @@
 @echo off
-title TIMEORA - Push to GitHub Repository
+title Abdur Raheem - Push Portfolio to GitHub
 color 0b
 
 set "PATH=C:\Program Files\GitHub CLI;%LOCALAPPDATA%\Programs\MinGit\cmd;%PATH%"
 
 echo ======================================================================
-echo           TIMEORA LUXURY STORE - GITHUB REPOSITORY SYNC
+echo       ABDUR RAHEEM PERSONAL PORTFOLIO - GITHUB REPOSITORY SYNC
 echo ======================================================================
 echo Repository: https://github.com/AbdurRaheem467/Abdurraheem.git
 echo.
@@ -18,7 +18,7 @@ echo.
 
 echo [2/4] Ensuring All Files Are Staged and Committed...
 git add .
-git commit -m "TIMEORA Haute Horlogerie Luxury Watches Complete Website" 2>nul
+git commit -m "Update Abdur Raheem Personal Portfolio Website" 2>nul
 echo.
 
 echo [3/4] Checking GitHub Authentication...
@@ -43,7 +43,7 @@ git push -u origin main
 if %errorlevel% equ 0 (
     echo.
     echo ======================================================================
-    echo SUCCESS! Website files have been pushed to GitHub successfully!
+    echo SUCCESS! Portfolio website files pushed to GitHub successfully!
     echo.
     echo View your repository here:
     echo https://github.com/AbdurRaheem467/Abdurraheem
