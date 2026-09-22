@@ -45,15 +45,29 @@ if %errorlevel% equ 0 (
     echo ======================================================================
     echo SUCCESS! Portfolio website files pushed to GitHub successfully!
     echo.
+    echo Your Live Website Link (GitHub Pages):
+    echo https://abdurraheem467.github.io/Abdurraheem/
+    echo.
     echo View your repository here:
     echo https://github.com/AbdurRaheem467/Abdurraheem
     echo ======================================================================
 ) else (
     echo.
     echo ======================================================================
-    echo Push encountered an issue. If prompt asks for username/password,
-    echo enter your GitHub Username and Personal Access Token (PAT).
+    echo Permission error detected. Refreshing GitHub Login authorization...
+    echo Browser will open. Please click 'Authorize github'...
     echo ======================================================================
+    echo.
+    gh auth login --web --git-protocol https -s repo,workflow
+    gh auth setup-git
+    git push -u origin main
+    if %errorlevel% equ 0 (
+        echo.
+        echo ======================================================================
+        echo SUCCESS! Portfolio website files pushed to GitHub successfully!
+        echo Live Link: https://abdurraheem467.github.io/Abdurraheem/
+        echo ======================================================================
+    )
 )
 
 echo.
