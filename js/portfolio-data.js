@@ -28,7 +28,7 @@ export const PORTFOLIO_DATA = {
 
   // 2. Direct Contact & Social Links
   contact: {
-    email: "hello@abdurraheem.com",
+    email: "abdurraheeem1258@gmail.com",
     phone: "03297898969",
     phoneDisplay: "0329 7898969",
     whatsapp: "+923297898969",
