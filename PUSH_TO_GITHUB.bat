@@ -23,8 +23,8 @@ if %errorlevel% neq 0 (
     echo ======================================================================
     echo Please Authorize GitHub in your Browser:
     echo 1. Ek 8-character code clipboard par copy ho chuka hoga.
-    echo 2. Browser khul raha hai, wahan Code Paste (Ctrl+V) karein.
-    echo 3. 'Continue' aur 'Authorize github' par click karein.
+    echo 2. Browser khul raha hai, wahan Code Paste [Ctrl+V] karein.
+    echo 3. Continue aur Authorize github par click karein.
     echo ======================================================================
     echo.
     gh auth login -h github.com -p https --web -c -s repo,workflow
@@ -54,10 +54,10 @@ echo.
 echo ======================================================================
 echo SUCCESS! Aapka Personal Web Developer Portfolio Live Ho Chuka Hai!
 echo.
-echo Live Link 1 (Personal Website):
+echo Live Link 1 [Personal Website]:
 echo https://abdurraheem467.github.io/personal-website/
 echo.
-echo Live Link 2 (Main Profile):
+echo Live Link 2 [Main Profile]:
 echo https://abdurraheem467.github.io/Abdurraheem/
 echo ======================================================================
 echo.
