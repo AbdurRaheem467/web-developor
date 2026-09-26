@@ -30,6 +30,7 @@ class PortfolioApp {
     this.setupNavbarScroll();
     this.setupScrollSpy();
     this.setupMobileMenu();
+    this.setupSkillsSlider();
     this.setupProjectFilters();
     this.setupProjectModal();
     this.setupContactForm();
@@ -65,34 +66,80 @@ class PortfolioApp {
   }
 
   /**
-   * Render Technical Skills Section
+   * Render Technical Skills Section in 3D Slideshow format
    */
   static renderSkills() {
-    const container = document.getElementById("skillsGrid");
-    if (!container) return;
+    const track = document.getElementById("skillsSliderTrack");
+    const dotsContainer = document.getElementById("skillsDotsContainer");
+    if (!track) return;
 
-    container.innerHTML = PORTFOLIO_DATA.skills.map((skill) => {
+    const categoryThemeMap = {
+      "Frontend Core": {
+        badgeBg: "bg-cyan-950/80 text-cyan-300 border-cyan-800/60",
+        iconBg: "bg-cyan-500/10 border-cyan-500/30 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black group-hover:shadow-[0_0_25px_rgba(6,182,212,0.7)]",
+        accentText: "text-cyan-400"
+      },
+      "Frameworks": {
+        badgeBg: "bg-indigo-950/80 text-indigo-300 border-indigo-800/60",
+        iconBg: "bg-indigo-500/10 border-indigo-500/30 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-[0_0_25px_rgba(99,102,241,0.7)]",
+        accentText: "text-indigo-400"
+      },
+      "Workflow": {
+        badgeBg: "bg-amber-950/80 text-amber-300 border-amber-800/60",
+        iconBg: "bg-amber-500/10 border-amber-500/30 text-amber-400 group-hover:bg-amber-500 group-hover:text-black group-hover:shadow-[0_0_25px_rgba(245,158,11,0.7)]",
+        accentText: "text-amber-400"
+      },
+      "Design & UX": {
+        badgeBg: "bg-emerald-950/80 text-emerald-300 border-emerald-800/60",
+        iconBg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black group-hover:shadow-[0_0_25px_rgba(16,185,129,0.7)]",
+        accentText: "text-emerald-400"
+      }
+    };
+
+    track.innerHTML = PORTFOLIO_DATA.skills.map((skill, index) => {
+      const theme = categoryThemeMap[skill.category] || categoryThemeMap["Frontend Core"];
       return `
-        <div class="glass-card p-4 sm:p-5 rounded-xl border border-slate-800 flex flex-col justify-between group">
-          <div class="space-y-3">
-            <div class="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
-              <i data-lucide="${skill.icon}" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <div class="flex items-center justify-between gap-1">
-                <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-indigo-300 transition-colors">${skill.name}</h3>
+        <div class="skill-3d-card-wrapper ${index === 0 ? "is-featured-slide" : ""}" data-slide-index="${index}">
+          <div class="skill-3d-card group" data-tilt>
+            <!-- Dynamic 3D Glare Reflection Layer -->
+            <div class="skill-3d-glare"></div>
+
+            <div class="skill-3d-content space-y-4">
+              <!-- Top Row: 3D Floating Icon + Category Badge -->
+              <div class="flex items-center justify-between">
+                <div class="skill-3d-icon-badge w-12 h-12 rounded-xl ${theme.iconBg} border flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="${skill.icon}" class="w-6 h-6"></i>
+                </div>
+                <span class="skill-3d-title-box text-[11px] font-mono-code font-semibold px-2.5 py-1 rounded-full ${theme.badgeBg} border uppercase tracking-wider">
+                  ${skill.category}
+                </span>
               </div>
-              <p class="text-[11px] font-mono-code text-indigo-400 uppercase tracking-wider mt-0.5">${skill.category}</p>
+
+              <!-- Title & Description with 3D Depth -->
+              <div class="skill-3d-title-box pt-1">
+                <h3 class="text-base sm:text-lg font-bold text-white group-hover:${theme.accentText} transition-colors tracking-tight">${skill.name}</h3>
+                <p class="skill-3d-desc text-xs text-slate-400 leading-relaxed mt-2 line-clamp-3">${skill.desc}</p>
+              </div>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed">${skill.desc}</p>
-          </div>
-          <div class="pt-3 mt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-            <span class="text-slate-500">Proficiency</span>
-            <span class="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-300 font-medium">${skill.level}</span>
+
+            <!-- Footer: 3D Depth Divider & Proficiency -->
+            <div class="skill-3d-footer pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-xs">
+              <span class="text-slate-500 font-medium">Proficiency</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-700/80 text-slate-200 font-mono-code text-[11px] font-medium shadow-inner">
+                ${skill.level}
+              </span>
+            </div>
           </div>
         </div>
       `;
     }).join("");
+
+    // Generate pagination dots
+    if (dotsContainer) {
+      dotsContainer.innerHTML = PORTFOLIO_DATA.skills.map((_, idx) => `
+        <button type="button" class="skill-dot-indicator ${idx === 0 ? "active" : ""}" data-index="${idx}" aria-label="Go to slide ${idx + 1}" title="Slide ${idx + 1}"></button>
+      `).join("");
+    }
   }
 
   /**
@@ -640,6 +687,49 @@ class PortfolioApp {
   }
 
   /**
+   * Set up 3D Interactive Slider & Card Tilt Physics
+   */
+  static setupSkillsSlider() {
+    const track = document.getElementById("skillsSliderTrack");
+    const viewport = document.getElementById("skillsSliderViewport");
+    if (!track || !viewport) return;
+
+    // 1. Attach 3D Card Tilt with Dynamic Holographic Glare Physics
+    const cards = track.querySelectorAll(".skill-3d-card");
+    cards.forEach((card) => {
+      const glare = card.querySelector(".skill-3d-glare");
+
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -14;
+        const rotateY = ((x - centerX) / centerX) * 14;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(28px) scale(1.03)`;
+
+        if (glare) {
+          glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.22), transparent 55%)`;
+          glare.style.opacity = "1";
+        }
+      });
+
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)";
+        if (glare) {
+          glare.style.opacity = "0";
+        }
+      });
+    });
+
+    // 2. Initialize 3D Slider Controller
+    window.skills3DSlider = new Skills3DSliderController();
+  }
+
+  /**
    * Helper to display a lightweight toast notification
    */
   static showToast(message) {
@@ -656,7 +746,270 @@ class PortfolioApp {
   }
 }
 
+/**
+ * 3D Skills Carousel & Slider Controller
+ */
+class Skills3DSliderController {
+  constructor() {
+    this.track = document.getElementById("skillsSliderTrack");
+    this.viewport = document.getElementById("skillsSliderViewport");
+    this.container = document.getElementById("skillsContainer");
+    this.prevBtn = document.getElementById("skillsPrevBtn");
+    this.nextBtn = document.getElementById("skillsNextBtn");
+    this.autoplayBtn = document.getElementById("skillsAutoplayBtn");
+    this.playIcon = document.getElementById("skillsPlayIcon");
+    this.pulseDot = document.getElementById("skillsAutoplayPulse");
+    this.statusText = document.getElementById("skillsAutoplayStatus");
+    this.counterEl = document.getElementById("currentSlideNum");
+    this.totalEl = document.getElementById("totalSlidesNum");
+    this.dotsContainer = document.getElementById("skillsDotsContainer");
+    this.modeSliderBtn = document.getElementById("modeSliderBtn");
+    this.modeGridBtn = document.getElementById("modeGridBtn");
+
+    if (!this.track || !this.viewport) return;
+
+    this.currentIndex = 0;
+    this.totalCards = PORTFOLIO_DATA.skills.length;
+    this.isPlaying = true;
+    this.autoplayTimer = null;
+    this.autoplayDelay = 3200;
+    this.isGridMode = false;
+
+    // Drag / Touch variables
+    this.isDragging = false;
+    this.startX = 0;
+    this.dragDiff = 0;
+
+    this.init();
+  }
+
+  getCardsPerView() {
+    const width = window.innerWidth;
+    if (width >= 1280) return 4;
+    if (width >= 1024) return 3;
+    if (width >= 640) return 2;
+    return 1;
+  }
+
+  getMaxIndex() {
+    return Math.max(0, this.totalCards - this.getCardsPerView());
+  }
+
+  init() {
+    if (this.totalEl) {
+      this.totalEl.textContent = String(this.totalCards).padStart(2, "0");
+    }
+    this.updateSlider();
+    this.startAutoplay();
+    this.bindEvents();
+  }
+
+  updateSlider() {
+    if (this.isGridMode) return;
+    const cardsPerView = this.getCardsPerView();
+    const maxIndex = this.getMaxIndex();
+    if (this.currentIndex > maxIndex) {
+      this.currentIndex = 0;
+    }
+
+    const cardWidthPercent = 100 / cardsPerView;
+    const offset = this.currentIndex * cardWidthPercent;
+    this.track.style.transform = `translate3d(-${offset}%, 0, 0)`;
+
+    // Counter
+    if (this.counterEl) {
+      this.counterEl.textContent = String(this.currentIndex + 1).padStart(2, "0");
+    }
+
+    // Dots
+    const dots = this.dotsContainer?.querySelectorAll(".skill-dot-indicator");
+    dots?.forEach((dot, idx) => {
+      dot.classList.toggle("active", idx === this.currentIndex);
+    });
+
+    // Active Card in View
+    const cardWrappers = this.track.querySelectorAll(".skill-3d-card-wrapper");
+    cardWrappers.forEach((w, idx) => {
+      const inView = idx >= this.currentIndex && idx < this.currentIndex + cardsPerView;
+      w.classList.toggle("is-featured-slide", inView);
+    });
+  }
+
+  nextSlide() {
+    const maxIndex = this.getMaxIndex();
+    this.currentIndex = this.currentIndex >= maxIndex ? 0 : this.currentIndex + 1;
+    this.updateSlider();
+  }
+
+  prevSlide() {
+    const maxIndex = this.getMaxIndex();
+    this.currentIndex = this.currentIndex <= 0 ? maxIndex : this.currentIndex - 1;
+    this.updateSlider();
+  }
+
+  goToSlide(index) {
+    const maxIndex = this.getMaxIndex();
+    this.currentIndex = Math.max(0, Math.min(index, maxIndex));
+    this.updateSlider();
+  }
+
+  startAutoplay() {
+    this.stopAutoplay();
+    if (!this.isPlaying || this.isGridMode) return;
+    this.autoplayTimer = setInterval(() => {
+      this.nextSlide();
+    }, this.autoplayDelay);
+
+    if (this.pulseDot) this.pulseDot.className = "w-2 h-2 rounded-full bg-cyan-400 animate-pulse";
+    if (this.statusText) this.statusText.textContent = "Auto-Slide: Active";
+    if (this.playIcon) this.playIcon.setAttribute("data-lucide", "pause");
+    PortfolioApp.refreshIcons();
+  }
+
+  stopAutoplay() {
+    if (this.autoplayTimer) {
+      clearInterval(this.autoplayTimer);
+      this.autoplayTimer = null;
+    }
+  }
+
+  toggleAutoplay() {
+    this.isPlaying = !this.isPlaying;
+    if (this.isPlaying) {
+      this.startAutoplay();
+    } else {
+      this.stopAutoplay();
+      if (this.pulseDot) this.pulseDot.className = "w-2 h-2 rounded-full bg-slate-500";
+      if (this.statusText) this.statusText.textContent = "Auto-Slide: Paused";
+      if (this.playIcon) this.playIcon.setAttribute("data-lucide", "play");
+      PortfolioApp.refreshIcons();
+    }
+  }
+
+  bindEvents() {
+    this.nextBtn?.addEventListener("click", () => {
+      this.nextSlide();
+      if (this.isPlaying) this.startAutoplay();
+    });
+
+    this.prevBtn?.addEventListener("click", () => {
+      this.prevSlide();
+      if (this.isPlaying) this.startAutoplay();
+    });
+
+    this.autoplayBtn?.addEventListener("click", () => {
+      this.toggleAutoplay();
+    });
+
+    // Pause on mouse hover over viewport
+    this.viewport?.addEventListener("mouseenter", () => {
+      if (this.isPlaying) this.stopAutoplay();
+    });
+
+    this.viewport?.addEventListener("mouseleave", () => {
+      if (this.isPlaying && !this.isDragging) this.startAutoplay();
+    });
+
+    // Dot indicators navigation
+    this.dotsContainer?.addEventListener("click", (e) => {
+      const dot = e.target.closest(".skill-dot-indicator");
+      if (!dot) return;
+      const index = parseInt(dot.getAttribute("data-index"), 10);
+      if (!isNaN(index)) {
+        this.goToSlide(index);
+        if (this.isPlaying) this.startAutoplay();
+      }
+    });
+
+    // View Mode Switcher
+    this.modeSliderBtn?.addEventListener("click", () => {
+      this.setMode(false);
+    });
+
+    this.modeGridBtn?.addEventListener("click", () => {
+      this.setMode(true);
+    });
+
+    // Mouse and Touch Drag
+    const handleDragStart = (clientX) => {
+      if (this.isGridMode) return;
+      this.isDragging = true;
+      this.startX = clientX;
+      this.dragDiff = 0;
+      this.stopAutoplay();
+      this.track.style.transition = "none";
+    };
+
+    const handleDragMove = (clientX) => {
+      if (!this.isDragging || this.isGridMode) return;
+      this.dragDiff = clientX - this.startX;
+      const cardsPerView = this.getCardsPerView();
+      const cardWidthPercent = 100 / cardsPerView;
+      const baseOffset = this.currentIndex * cardWidthPercent;
+      const pixelWidth = this.viewport.clientWidth;
+      const dragPercent = (this.dragDiff / pixelWidth) * 100;
+      this.track.style.transform = `translate3d(-${baseOffset - dragPercent}%, 0, 0)`;
+    };
+
+    const handleDragEnd = () => {
+      if (!this.isDragging) return;
+      this.isDragging = false;
+      this.track.style.transition = "transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)";
+      
+      const threshold = 40;
+      if (this.dragDiff < -threshold) {
+        this.nextSlide();
+      } else if (this.dragDiff > threshold) {
+        this.prevSlide();
+      } else {
+        this.updateSlider();
+      }
+
+      if (this.isPlaying) this.startAutoplay();
+    };
+
+    this.viewport?.addEventListener("mousedown", (e) => handleDragStart(e.clientX));
+    window.addEventListener("mousemove", (e) => handleDragMove(e.clientX));
+    window.addEventListener("mouseup", () => handleDragEnd());
+
+    this.viewport?.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) handleDragStart(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener("touchmove", (e) => {
+      if (this.isDragging && e.touches.length === 1) handleDragMove(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener("touchend", () => handleDragEnd());
+
+    // Responsive recalculation
+    window.addEventListener("resize", () => {
+      this.updateSlider();
+    });
+  }
+
+  setMode(gridMode) {
+    this.isGridMode = gridMode;
+    if (this.container) {
+      this.container.classList.toggle("is-grid-mode", gridMode);
+    }
+
+    if (gridMode) {
+      this.stopAutoplay();
+      this.track.style.transform = "none";
+      if (this.modeSliderBtn) this.modeSliderBtn.className = "px-3 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5";
+      if (this.modeGridBtn) this.modeGridBtn.className = "px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5";
+    } else {
+      if (this.modeSliderBtn) this.modeSliderBtn.className = "px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5";
+      if (this.modeGridBtn) this.modeGridBtn.className = "px-3 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5";
+      this.updateSlider();
+      if (this.isPlaying) this.startAutoplay();
+    }
+  }
+}
+
 // Start application when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   PortfolioApp.init();
 });
+
