@@ -465,118 +465,92 @@
        SKILLS SECTION
        ========================================================================= -->
   <!-- =========================================================================
-       SKILLS SECTION (INTERACTIVE 3D STACK DECK CAROUSEL)
+       SKILLS SECTION (CONTINUOUS MINI-SLIDES MARQUEE STREAM)
        ========================================================================= -->
   <section id="skills" class="py-24 bg-[#07090e] relative overflow-hidden">
-    <!-- Ambient 3D Glowing Background Spheres -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-gradient-to-tr from-indigo-600/12 via-cyan-500/10 to-transparent rounded-full blur-[130px] pointer-events-none"></div>
+    <!-- Ambient Glowing Background Spheres -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-indigo-600/12 via-cyan-500/10 to-transparent rounded-full blur-[140px] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
       <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto mb-10 space-y-3">
+      <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/70 border border-cyan-800/60 text-cyan-300 text-xs font-semibold uppercase tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-          <i data-lucide="layers" class="w-3.5 h-3.5 text-cyan-400"></i>
-          <span>Interactive 3D Stack Deck</span>
+          <i data-lucide="zap" class="w-3.5 h-3.5 text-cyan-400"></i>
+          <span>Continuous Tech Stream</span>
         </div>
         <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
           Skills & Modern Technologies
         </h2>
         <p class="text-slate-400 text-base sm:text-lg">
-          Layered in sleek 3D perspective depth. Swipe cards, click the deck, or select any tech pill below to smoothly flip through technologies.
+          Smooth, non-stop continuous stream of core web technologies, frameworks, and modern workflows. Hover over any technology to pause and inspect.
         </p>
       </div>
 
-      <!-- 3D Stack Deck Container -->
-      <div id="skillsContainer" class="skills-container w-full max-w-4xl mx-auto">
-        
-        <!-- Controls Toolbar (Top) -->
-        <div class="skills-slider-controls flex flex-wrap items-center justify-between gap-3 mb-6 px-2">
-          <!-- Slide Counter & Autoplay Indicator -->
-          <div class="flex items-center gap-2.5">
-            <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs font-mono-code text-slate-300 shadow-sm">
-              <span id="skillsAutoplayPulse" class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-              <span id="skillsAutoplayStatus">3D Auto-Stack: Active</span>
-            </span>
-            <div class="text-xs font-mono-code text-slate-400 hidden sm:inline-block">
-              Focused: <span id="currentCardName" class="text-cyan-400 font-bold">HTML5</span> (<span id="currentSlideNum">01</span>/10)
-            </div>
-          </div>
-
-          <!-- Mode Switcher -->
-          <div class="flex items-center gap-2">
-            <div class="bg-slate-900/90 border border-slate-800 rounded-full p-1 flex items-center">
-              <button id="modeSphereBtn" type="button" class="px-3.5 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5" title="3D Stack Deck View">
-                <i data-lucide="layers" class="w-3.5 h-3.5"></i>
-                <span>3D Deck</span>
-              </button>
-              <button id="modeGridBtn" type="button" class="px-3.5 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5" title="All Skills Grid View">
-                <i data-lucide="grid" class="w-3.5 h-3.5"></i>
-                <span>Grid View</span>
-              </button>
-            </div>
-          </div>
+      <!-- Controls Toolbar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-6 px-2 max-w-5xl mx-auto">
+        <!-- Status Indicator -->
+        <div class="flex items-center gap-2.5">
+          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs font-mono-code text-slate-300 shadow-sm">
+            <span id="skillsAutoplayPulse" class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            <span id="skillsAutoplayStatus">Continuous Stream: Active</span>
+          </span>
+          <span class="text-xs font-mono-code text-slate-500 hidden sm:inline-block">
+            &bull; Hover to pause
+          </span>
         </div>
 
-        <!-- 3D Stack Deck Viewport -->
-        <div id="cylinderViewWrapper" class="relative">
-          <div id="stackDeckStage" class="stack-deck-stage">
-            <div id="stackDeckViewport" class="stack-deck-viewport">
-              <!-- Rendered dynamically by main.js with 10 cards in 3D layered stack -->
-            </div>
+        <!-- Controls: Speed & View Mode -->
+        <div class="flex items-center gap-2">
+          <!-- Pause / Resume Button -->
+          <button id="skillsMarqueePauseBtn" type="button" class="px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 text-xs font-semibold text-slate-300 hover:text-white transition-all flex items-center gap-1.5 shadow-sm" title="Pause or Resume Stream">
+            <i data-lucide="pause" id="skillsPlayIcon" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span id="skillsPauseBtnText">Pause</span>
+          </button>
+
+          <!-- Speed Presets -->
+          <div class="bg-slate-900/90 border border-slate-800 rounded-full p-1 flex items-center">
+            <button id="speedSlowBtn" type="button" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono-code text-slate-400 hover:text-white transition-all">0.7x</button>
+            <button id="speedNormalBtn" type="button" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono-code bg-indigo-600 text-white font-bold transition-all shadow-sm">1.0x</button>
+            <button id="speedFastBtn" type="button" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono-code text-slate-400 hover:text-white transition-all">1.5x</button>
           </div>
 
-          <!-- Bottom Deck Action Controls -->
-          <div class="flex flex-col items-center justify-center gap-4 mt-2">
-            
-            <!-- Sleek Control Buttons Row -->
-            <div class="flex items-center gap-3">
-              <button id="skillsPrevBtn" type="button" class="skill-nav-btn" aria-label="Previous Skill" title="Previous Skill">
-                <i data-lucide="chevron-left" class="w-5 h-5"></i>
-              </button>
-
-              <button id="skillsFlipNextBtn" type="button" class="btn-primary px-6 py-2.5 rounded-full text-xs font-semibold text-white flex items-center gap-2 shadow-lg shadow-indigo-500/20 group">
-                <span>Next Technology</span>
-                <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
-              </button>
-
-              <button id="skillsAutoplayBtn" type="button" class="skill-nav-btn" aria-label="Pause / Resume Rotation" title="Pause / Resume Auto-Slide">
-                <i data-lucide="pause" id="skillsPlayIcon" class="w-4 h-4"></i>
-              </button>
-            </div>
-
-            <!-- Auto-Slide Linear Progress Bar -->
-            <div class="w-full max-w-xs px-4">
-              <div class="stack-progress-track">
-                <div id="stackProgressFill" class="stack-progress-fill"></div>
-              </div>
-            </div>
-
-            <!-- Swipe Hint -->
-            <p class="text-[11px] font-mono-code text-slate-500 flex items-center gap-1.5">
-              <i data-lucide="mouse-pointer-click" class="w-3 h-3 text-cyan-400"></i>
-              <span>Click card or drag to flip &bull; Keyboard: &larr; / &rarr;</span>
-            </p>
+          <!-- View Mode (Stream vs Grid) -->
+          <div class="bg-slate-900/90 border border-slate-800 rounded-full p-1 flex items-center">
+            <button id="modeStreamBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5" title="Continuous Stream">
+              <i data-lucide="repeat" class="w-3.5 h-3.5"></i>
+              <span class="hidden sm:inline">Stream</span>
+            </button>
+            <button id="modeGridBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5" title="Grid View">
+              <i data-lucide="grid" class="w-3.5 h-3.5"></i>
+              <span class="hidden sm:inline">Grid</span>
+            </button>
           </div>
         </div>
+      </div>
 
-        <!-- 3D Grid Viewport (Hidden in Deck Mode) -->
-        <div id="cylinderGridWrapper" class="hidden">
-          <div id="skillsGridTrack" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 py-6">
-            <!-- Rendered for Grid mode -->
+      <!-- Continuous Marquee Viewport -->
+      <div id="skillsStreamWrapper" class="relative">
+        <div id="skillsMarqueeWrapper" class="skills-marquee-wrapper speed-normal">
+          
+          <!-- Row 1: Slides to Left -->
+          <div class="skills-marquee-row marquee-left" id="marqueeRow1">
+            <!-- Rendered dynamically by main.js with duplicated tracks for seamless infinite loop -->
           </div>
+
+          <!-- Row 2: Slides to Right -->
+          <div class="skills-marquee-row marquee-right" id="marqueeRow2">
+            <!-- Rendered dynamically by main.js with duplicated tracks for seamless infinite loop -->
+          </div>
+
         </div>
+      </div>
 
-        <!-- Quick Jump Tech Pills Strip -->
-        <div class="mt-8 pt-6 border-t border-slate-800/80">
-          <div class="text-center mb-3">
-            <span class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">Quick Tech Jump:</span>
-          </div>
-          <div id="skillsPillsTrack" class="flex flex-wrap items-center justify-center gap-2">
-            <!-- Rendered dynamically by main.js -->
-          </div>
+      <!-- Grid Viewport (Hidden in Stream Mode) -->
+      <div id="skillsGridWrapper" class="hidden max-w-6xl mx-auto">
+        <div id="skillsGridTrack" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 py-6">
+          <!-- Rendered dynamically for Grid mode -->
         </div>
-
       </div>
 
     </div>
