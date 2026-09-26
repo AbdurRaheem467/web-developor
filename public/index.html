@@ -465,102 +465,119 @@
        SKILLS SECTION
        ========================================================================= -->
   <!-- =========================================================================
-       SKILLS SECTION (3D ROTATING SPHERE & CYLINDER CAROUSEL - STYLE C)
+       SKILLS SECTION (INTERACTIVE 3D STACK DECK CAROUSEL)
        ========================================================================= -->
   <section id="skills" class="py-24 bg-[#07090e] relative overflow-hidden">
     <!-- Ambient 3D Glowing Background Spheres -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-indigo-600/15 via-cyan-500/10 to-transparent rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-gradient-to-tr from-indigo-600/12 via-cyan-500/10 to-transparent rounded-full blur-[130px] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
       <!-- Section Header -->
       <div class="text-center max-w-3xl mx-auto mb-10 space-y-3">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-800/60 text-cyan-300 text-xs font-semibold uppercase tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.25)]">
-          <i data-lucide="rotate-3d" class="w-3.5 h-3.5 text-cyan-400"></i>
-          <span>3D Rotating Skills Sphere</span>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/70 border border-cyan-800/60 text-cyan-300 text-xs font-semibold uppercase tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+          <i data-lucide="layers" class="w-3.5 h-3.5 text-cyan-400"></i>
+          <span>Interactive 3D Stack Deck</span>
         </div>
         <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
           Skills & Modern Technologies
         </h2>
         <p class="text-slate-400 text-base sm:text-lg">
-          3D interactive cylinder wheel rotating in full spatial perspective. Drag or swipe horizontally to spin the wheel, or click any card to bring it directly to the front.
+          Layered in sleek 3D perspective depth. Swipe cards, click the deck, or select any tech pill below to smoothly flip through technologies.
         </p>
       </div>
 
-      <!-- 3D Cylinder / Sphere Carousel Stage -->
-      <div id="skillsContainer" class="skills-container w-full">
+      <!-- 3D Stack Deck Container -->
+      <div id="skillsContainer" class="skills-container w-full max-w-4xl mx-auto">
         
-        <!-- Controls Toolbar -->
-        <div class="skills-slider-controls flex flex-wrap items-center justify-between gap-4 mb-4 px-2">
+        <!-- Controls Toolbar (Top) -->
+        <div class="skills-slider-controls flex flex-wrap items-center justify-between gap-3 mb-6 px-2">
           <!-- Slide Counter & Autoplay Indicator -->
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2.5">
             <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs font-mono-code text-slate-300 shadow-sm">
               <span id="skillsAutoplayPulse" class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-              <span id="skillsAutoplayStatus">3D Orbit: Active</span>
+              <span id="skillsAutoplayStatus">3D Auto-Stack: Active</span>
             </span>
             <div class="text-xs font-mono-code text-slate-400 hidden sm:inline-block">
               Focused: <span id="currentCardName" class="text-cyan-400 font-bold">HTML5</span> (<span id="currentSlideNum">01</span>/10)
             </div>
           </div>
 
-          <!-- Action Buttons -->
+          <!-- Mode Switcher -->
           <div class="flex items-center gap-2">
-            <!-- View Mode Switcher -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-full p-1 flex items-center mr-2">
-              <button id="modeSphereBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5" title="3D Wheel View">
-                <i data-lucide="rotate-3d" class="w-3.5 h-3.5"></i>
-                <span class="hidden sm:inline">3D Wheel</span>
+            <div class="bg-slate-900/90 border border-slate-800 rounded-full p-1 flex items-center">
+              <button id="modeSphereBtn" type="button" class="px-3.5 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5" title="3D Stack Deck View">
+                <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+                <span>3D Deck</span>
               </button>
-              <button id="modeGridBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5" title="All Skills Grid View">
+              <button id="modeGridBtn" type="button" class="px-3.5 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5" title="All Skills Grid View">
                 <i data-lucide="grid" class="w-3.5 h-3.5"></i>
-                <span class="hidden sm:inline">3D Grid</span>
+                <span>Grid View</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Stack Deck Viewport -->
+        <div id="cylinderViewWrapper" class="relative">
+          <div id="stackDeckStage" class="stack-deck-stage">
+            <div id="stackDeckViewport" class="stack-deck-viewport">
+              <!-- Rendered dynamically by main.js with 10 cards in 3D layered stack -->
+            </div>
+          </div>
+
+          <!-- Bottom Deck Action Controls -->
+          <div class="flex flex-col items-center justify-center gap-4 mt-2">
+            
+            <!-- Sleek Control Buttons Row -->
+            <div class="flex items-center gap-3">
+              <button id="skillsPrevBtn" type="button" class="skill-nav-btn" aria-label="Previous Skill" title="Previous Skill">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+              </button>
+
+              <button id="skillsFlipNextBtn" type="button" class="btn-primary px-6 py-2.5 rounded-full text-xs font-semibold text-white flex items-center gap-2 shadow-lg shadow-indigo-500/20 group">
+                <span>Next Technology</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+              </button>
+
+              <button id="skillsAutoplayBtn" type="button" class="skill-nav-btn" aria-label="Pause / Resume Rotation" title="Pause / Resume Auto-Slide">
+                <i data-lucide="pause" id="skillsPlayIcon" class="w-4 h-4"></i>
               </button>
             </div>
 
-            <!-- Spin Controls -->
-            <button id="skillsPrevBtn" type="button" class="skill-nav-btn" aria-label="Rotate Left" title="Rotate Left">
-              <i data-lucide="chevron-left" class="w-5 h-5"></i>
-            </button>
-            <button id="skillsAutoplayBtn" type="button" class="skill-nav-btn" aria-label="Pause / Resume Rotation" title="Pause / Resume Rotation">
-              <i data-lucide="pause" id="skillsPlayIcon" class="w-4 h-4"></i>
-            </button>
-            <button id="skillsNextBtn" type="button" class="skill-nav-btn" aria-label="Rotate Right" title="Rotate Right">
-              <i data-lucide="chevron-right" class="w-5 h-5"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- The 3D Rotating Cylinder Wheel Viewport -->
-        <div id="cylinderViewWrapper" class="relative">
-          <div id="cylinderScene" class="cylinder-scene">
-            <div id="cylinderRing" class="cylinder-ring">
-              <!-- Rendered dynamically by main.js with 10 cards in 3D circular space -->
+            <!-- Auto-Slide Linear Progress Bar -->
+            <div class="w-full max-w-xs px-4">
+              <div class="stack-progress-track">
+                <div id="stackProgressFill" class="stack-progress-fill"></div>
+              </div>
             </div>
+
+            <!-- Swipe Hint -->
+            <p class="text-[11px] font-mono-code text-slate-500 flex items-center gap-1.5">
+              <i data-lucide="mouse-pointer-click" class="w-3 h-3 text-cyan-400"></i>
+              <span>Click card or drag to flip &bull; Keyboard: &larr; / &rarr;</span>
+            </p>
           </div>
         </div>
 
-        <!-- 3D Grid Viewport (Hidden in Wheel Mode) -->
+        <!-- 3D Grid Viewport (Hidden in Deck Mode) -->
         <div id="cylinderGridWrapper" class="hidden">
           <div id="skillsGridTrack" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 py-6">
             <!-- Rendered for Grid mode -->
           </div>
         </div>
 
-        <!-- Interactive Hint & Dots -->
-        <div class="skills-slider-controls mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 px-2">
-          <div id="skillsDotsContainer" class="flex items-center gap-2">
-            <!-- 10 dots -->
+        <!-- Quick Jump Tech Pills Strip -->
+        <div class="mt-8 pt-6 border-t border-slate-800/80">
+          <div class="text-center mb-3">
+            <span class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">Quick Tech Jump:</span>
           </div>
-          <div class="text-xs text-slate-500 flex items-center gap-2">
-            <i data-lucide="mouse-pointer" class="w-3.5 h-3.5 text-cyan-400"></i>
-            <span>Drag horizontally to spin the 3D wheel &bull; Click card to focus</span>
+          <div id="skillsPillsTrack" class="flex flex-wrap items-center justify-center gap-2">
+            <!-- Rendered dynamically by main.js -->
           </div>
         </div>
 
       </div>
-
-    </div>
-  </section>
 
     </div>
   </section>

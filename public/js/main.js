@@ -66,72 +66,127 @@ class PortfolioApp {
   }
 
   /**
-   * Render Technical Skills Section in 3D Cylinder / Sphere Carousel format
+   * Render Technical Skills Section in Interactive 3D Stack Deck format
    */
   static renderSkills() {
-    const ring = document.getElementById("cylinderRing");
+    const viewport = document.getElementById("stackDeckViewport");
     const gridTrack = document.getElementById("skillsGridTrack");
-    const dotsContainer = document.getElementById("skillsDotsContainer");
-    if (!ring) return;
+    const pillsTrack = document.getElementById("skillsPillsTrack");
+    if (!viewport) return;
 
     const categoryThemeMap = {
       "Frontend Core": {
         badgeBg: "bg-cyan-950/80 text-cyan-300 border-cyan-800/60",
         iconBg: "bg-cyan-500/10 border-cyan-500/30 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black group-hover:shadow-[0_0_25px_rgba(6,182,212,0.7)]",
-        accentText: "text-cyan-400"
+        accentText: "text-cyan-400",
+        barColor: "from-cyan-500 to-blue-500"
       },
       "Frameworks": {
         badgeBg: "bg-indigo-950/80 text-indigo-300 border-indigo-800/60",
         iconBg: "bg-indigo-500/10 border-indigo-500/30 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-[0_0_25px_rgba(99,102,241,0.7)]",
-        accentText: "text-indigo-400"
+        accentText: "text-indigo-400",
+        barColor: "from-indigo-500 to-purple-500"
       },
       "Workflow": {
         badgeBg: "bg-amber-950/80 text-amber-300 border-amber-800/60",
         iconBg: "bg-amber-500/10 border-amber-500/30 text-amber-400 group-hover:bg-amber-500 group-hover:text-black group-hover:shadow-[0_0_25px_rgba(245,158,11,0.7)]",
-        accentText: "text-amber-400"
+        accentText: "text-amber-400",
+        barColor: "from-amber-500 to-orange-500"
       },
       "Design & UX": {
         badgeBg: "bg-emerald-950/80 text-emerald-300 border-emerald-800/60",
         iconBg: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black group-hover:shadow-[0_0_25px_rgba(16,185,129,0.7)]",
-        accentText: "text-emerald-400"
+        accentText: "text-emerald-400",
+        barColor: "from-emerald-500 to-teal-500"
       }
     };
 
-    // 1. Render 3D Cylinder Ring Cards
-    ring.innerHTML = PORTFOLIO_DATA.skills.map((skill, index) => {
+    const skillMetadata = {
+      "HTML5": { pct: 95, tags: ["Semantic HTML", "W3C Standards", "SEO", "Accessibility"] },
+      "CSS3": { pct: 92, tags: ["Flexbox & Grid", "Keyframes", "Custom Properties", "Responsive"] },
+      "JavaScript": { pct: 90, tags: ["ES6+ Modern", "Async / Await", "DOM Engine", "Fetch & APIs"] },
+      "React": { pct: 88, tags: ["Components", "Hooks", "State Flow", "Virtual DOM"] },
+      "Next.js": { pct: 85, tags: ["App Router", "SSR / SSG", "Server Actions", "Vercel Deploy"] },
+      "Tailwind CSS": { pct: 94, tags: ["Design Systems", "Dark Mode", "Fluid Layouts", "JIT Engine"] },
+      "Git & GitHub": { pct: 86, tags: ["Branch Flow", "Pull Requests", "CI / CD", "Version Control"] },
+      "Responsive Web Design": { pct: 98, tags: ["Mobile-First", "Fluid Typography", "Cross-Browser", "Retina Ready"] },
+      "UI/UX Design": { pct: 88, tags: ["Wireframing", "Figma Flow", "Visual Balance", "Micro-Interactions"] },
+      "API Integration": { pct: 87, tags: ["REST APIs", "JSON Endpoints", "Webhook Handlers", "Auth Tokens"] }
+    };
+
+    // 1. Render 3D Stack Cards
+    viewport.innerHTML = PORTFOLIO_DATA.skills.map((skill, index) => {
       const theme = categoryThemeMap[skill.category] || categoryThemeMap["Frontend Core"];
+      const meta = skillMetadata[skill.name] || { pct: 90, tags: ["Modern Standards", "Clean Code"] };
+      const depth = index === 0 ? "0" : index <= 3 ? String(index) : "hidden";
+
+      const tagsHtml = meta.tags.map(t => `
+        <span class="text-[10px] font-mono-code px-2 py-0.5 rounded-md bg-slate-900/90 border border-slate-800 text-slate-300">
+          #${t}
+        </span>
+      `).join("");
+
       return `
-        <div class="cylinder-card group ${index === 0 ? "is-front" : ""}" data-card-index="${index}">
+        <div class="stack-card group" data-card-index="${index}" data-depth="${depth}">
           <!-- Dynamic 3D Glare Reflection Layer -->
           <div class="skill-3d-glare"></div>
 
-          <div class="skill-3d-content space-y-3">
-            <!-- Top Row: Icon + Category Badge + Index -->
+          <div class="space-y-4">
+            <!-- Top Row: Icon + Badges + Index -->
             <div class="flex items-center justify-between">
-              <div class="skill-3d-icon-badge w-11 h-11 rounded-xl ${theme.iconBg} border flex items-center justify-center transition-all duration-300">
-                <i data-lucide="${skill.icon}" class="w-5 h-5"></i>
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl ${theme.iconBg} border flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="${skill.icon}" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-xl font-display font-bold text-white group-hover:${theme.accentText} transition-colors tracking-tight">
+                      ${skill.name}
+                    </h3>
+                  </div>
+                  <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded-full ${theme.badgeBg} border uppercase tracking-wider inline-block mt-0.5">
+                    ${skill.category}
+                  </span>
+                </div>
               </div>
-              <div class="flex items-center gap-1.5">
-                <span class="skill-3d-title-box text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded-full ${theme.badgeBg} border uppercase tracking-wider">
-                  ${skill.category}
+
+              <div class="text-right">
+                <span class="text-xs font-mono-code text-slate-500 font-bold block">#0${index + 1} / 10</span>
+                <span class="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700/80 text-cyan-300 font-mono-code text-[11px] font-medium shadow-inner inline-block mt-1">
+                  ${skill.level}
                 </span>
-                <span class="text-[10px] font-mono-code text-slate-500 font-bold">#0${index + 1}</span>
               </div>
             </div>
 
-            <!-- Title & Description with 3D Depth -->
-            <div class="skill-3d-title-box pt-1">
-              <h3 class="text-base font-bold text-white group-hover:${theme.accentText} transition-colors tracking-tight">${skill.name}</h3>
-              <p class="skill-3d-desc text-xs text-slate-400 leading-relaxed mt-1.5 line-clamp-3">${skill.desc}</p>
+            <!-- Description -->
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+              ${skill.desc}
+            </p>
+
+            <!-- Feature Tags -->
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${tagsHtml}
             </div>
           </div>
 
-          <!-- Footer: 3D Depth Divider & Proficiency -->
-          <div class="skill-3d-footer pt-3 mt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
-            <span class="text-slate-500 font-medium text-[11px]">Proficiency</span>
-            <span class="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700/80 text-slate-200 font-mono-code text-[11px] font-medium shadow-inner">
-              ${skill.level}
-            </span>
+          <!-- Bottom Row: Animated Proficiency Meter & Prompt -->
+          <div class="pt-4 mt-2 border-t border-slate-800/80 space-y-2">
+            <div class="flex items-center justify-between text-xs font-mono-code">
+              <span class="text-slate-400">Mastery & Efficiency</span>
+              <span class="text-white font-bold">${meta.pct}%</span>
+            </div>
+            
+            <div class="w-full h-2 rounded-full bg-slate-950 border border-slate-800 overflow-hidden p-0.5">
+              <div class="h-full rounded-full bg-gradient-to-r ${theme.barColor} transition-all duration-700" style="width: ${meta.pct}%"></div>
+            </div>
+
+            <div class="flex items-center justify-between pt-1 text-[11px] text-slate-500 font-mono-code">
+              <span class="flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3 h-3 text-cyan-400"></i>
+                <span>3+ Years Practical Usage</span>
+              </span>
+              <span class="hidden sm:inline-block text-slate-500">Tap to flip &rarr;</span>
+            </div>
           </div>
         </div>
       `;
@@ -141,6 +196,7 @@ class PortfolioApp {
     if (gridTrack) {
       gridTrack.innerHTML = PORTFOLIO_DATA.skills.map((skill, index) => {
         const theme = categoryThemeMap[skill.category] || categoryThemeMap["Frontend Core"];
+        const meta = skillMetadata[skill.name] || { pct: 90, tags: [] };
         return `
           <div class="glass-card p-5 rounded-2xl border border-slate-800 flex flex-col justify-between group hover:border-cyan-500/40 transition-all duration-300">
             <div class="space-y-3">
@@ -159,17 +215,20 @@ class PortfolioApp {
             </div>
             <div class="pt-3 mt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
               <span class="text-slate-500">Proficiency</span>
-              <span class="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-300 font-mono-code text-[11px]">${skill.level}</span>
+              <span class="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-300 font-mono-code text-[11px]">${skill.level} (${meta.pct}%)</span>
             </div>
           </div>
         `;
       }).join("");
     }
 
-    // 3. Generate pagination dots
-    if (dotsContainer) {
-      dotsContainer.innerHTML = PORTFOLIO_DATA.skills.map((_, idx) => `
-        <button type="button" class="skill-dot-indicator ${idx === 0 ? "active" : ""}" data-index="${idx}" aria-label="Focus skill ${idx + 1}" title="${PORTFOLIO_DATA.skills[idx].name}"></button>
+    // 3. Render Quick Jump Tech Pills
+    if (pillsTrack) {
+      pillsTrack.innerHTML = PORTFOLIO_DATA.skills.map((skill, idx) => `
+        <button type="button" class="skill-pill-btn ${idx === 0 ? "active" : ""}" data-index="${idx}" aria-label="Jump to ${skill.name}">
+          <i data-lucide="${skill.icon}" class="w-3.5 h-3.5"></i>
+          <span>${skill.name}</span>
+        </button>
       `).join("");
     }
   }
@@ -719,14 +778,14 @@ class PortfolioApp {
   }
 
   /**
-   * Set up 3D Rotating Sphere / Cylinder Carousel (Style C)
+   * Set up 3D Interactive Stack Deck Carousel
    */
   static setupSkillsSlider() {
-    const ring = document.getElementById("cylinderRing");
-    const scene = document.getElementById("cylinderScene");
-    if (!ring || !scene) return;
+    const viewport = document.getElementById("stackDeckViewport");
+    const stage = document.getElementById("stackDeckStage");
+    if (!viewport || !stage) return;
 
-    window.skills3DCylinder = new Skills3DCylinderController();
+    window.skills3DStack = new Skills3DStackController();
   }
 
   /**
@@ -747,152 +806,162 @@ class PortfolioApp {
 }
 
 /**
- * 3D CYLINDER / SPHERE ROTATING CAROUSEL CONTROLLER (STYLE C)
+ * INTERACTIVE 3D STACK DECK CAROUSEL CONTROLLER
  * ==============================================================================
- * Positions 10 skill cards in a real 3D circular cylinder ring (360 degrees).
- * Provides continuous smooth auto-rotation, interactive drag spinning,
- * snap-to-card navigation, click-to-focus front, and mode switching.
+ * Positions 10 skills in a neat, layered 3D card deck with smooth spring physics,
+ * horizontal mouse/touch drag gestures, auto-slide progress, and quick-jump pills.
  * ==============================================================================
  */
-class Skills3DCylinderController {
+class Skills3DStackController {
   constructor() {
-    this.ring = document.getElementById("cylinderRing");
-    this.scene = document.getElementById("cylinderScene");
+    this.viewport = document.getElementById("stackDeckViewport");
+    this.stage = document.getElementById("stackDeckStage");
     this.viewWrapper = document.getElementById("cylinderViewWrapper");
     this.gridWrapper = document.getElementById("cylinderGridWrapper");
     this.prevBtn = document.getElementById("skillsPrevBtn");
-    this.nextBtn = document.getElementById("skillsNextBtn");
+    this.nextBtn = document.getElementById("skillsFlipNextBtn");
     this.autoplayBtn = document.getElementById("skillsAutoplayBtn");
     this.playIcon = document.getElementById("skillsPlayIcon");
     this.pulseDot = document.getElementById("skillsAutoplayPulse");
     this.statusText = document.getElementById("skillsAutoplayStatus");
     this.focusedNameEl = document.getElementById("currentCardName");
     this.slideNumEl = document.getElementById("currentSlideNum");
-    this.dotsContainer = document.getElementById("skillsDotsContainer");
+    this.pillsTrack = document.getElementById("skillsPillsTrack");
+    this.progressBar = document.getElementById("stackProgressFill");
     this.modeSphereBtn = document.getElementById("modeSphereBtn");
     this.modeGridBtn = document.getElementById("modeGridBtn");
 
-    this.cards = Array.from(this.ring.querySelectorAll(".cylinder-card"));
+    this.cards = Array.from(this.viewport.querySelectorAll(".stack-card"));
     this.totalCards = this.cards.length;
-    this.angleStep = 360 / this.totalCards; // 36 degrees per card
-
-    this.currentAngle = 0;
-    this.targetAngle = 0;
-    this.autoRotateSpeed = 0.16; // Smooth continuous rotation speed
+    this.currentIndex = 0;
+    this.isAnimating = false;
     this.isAutoSpinning = true;
+    this.autoIntervalTime = 4200; // 4.2s per card
+    this.timerStartTime = Date.now();
+    this.progressFrameId = null;
+    this.isHovered = false;
     this.isDragging = false;
     this.startX = 0;
-    this.startAngle = 0;
-    this.resumeTimeout = null;
-    this.animationFrameId = null;
+    this.currentDragX = 0;
     this.isGridMode = false;
 
     this.init();
   }
 
-  getRadius() {
-    const width = window.innerWidth;
-    if (width >= 1024) return 440;
-    if (width >= 640) return 360;
-    return 290;
-  }
-
   init() {
-    this.layoutCards();
+    this.updateStackPositions();
     this.bindEvents();
-    this.startLoop();
+    this.startProgressTimer();
   }
 
-  layoutCards() {
-    const radius = this.getRadius();
-    this.cards.forEach((card, i) => {
-      const cardAngle = i * this.angleStep;
-      card.style.transform = `rotateY(${cardAngle}deg) translateZ(${radius}px)`;
+  updateStackPositions() {
+    this.cards.forEach((card, idx) => {
+      const offset = (idx - this.currentIndex + this.totalCards) % this.totalCards;
+      
+      card.classList.remove("is-exiting-left", "is-exiting-right");
 
-      // Setup 3D mouse tilt on each individual card
-      this.setupCardTilt(card);
+      if (offset === 0) {
+        card.setAttribute("data-depth", "0");
+        this.setupFrontCardTilt(card);
+      } else if (offset === 1) {
+        card.setAttribute("data-depth", "1");
+        this.clearCardTilt(card);
+      } else if (offset === 2) {
+        card.setAttribute("data-depth", "2");
+        this.clearCardTilt(card);
+      } else if (offset === 3) {
+        card.setAttribute("data-depth", "3");
+        this.clearCardTilt(card);
+      } else {
+        card.setAttribute("data-depth", "hidden");
+        this.clearCardTilt(card);
+      }
     });
 
-    this.updateRingTransform();
-  }
-
-  updateRingTransform() {
-    this.ring.style.transform = `rotateX(-6deg) rotateY(${this.currentAngle}deg)`;
-    this.updateFocusedState();
-  }
-
-  updateFocusedState() {
-    // Determine which card is facing front (closest to 0 degrees)
-    let normalized = ((-this.currentAngle % 360) + 360) % 360;
-    let focusedIndex = Math.round(normalized / this.angleStep) % this.totalCards;
-
-    this.cards.forEach((card, i) => {
-      // Calculate angular distance to front
-      let diff = Math.abs((i * this.angleStep - normalized + 540) % 360 - 180);
-      const isFront = diff < 22;
-      const isBack = diff > 90;
-
-      card.classList.toggle("is-front", isFront);
-      card.classList.toggle("is-back", isBack);
-    });
-
-    // Update UI elements
-    if (this.focusedNameEl && PORTFOLIO_DATA.skills[focusedIndex]) {
-      this.focusedNameEl.textContent = PORTFOLIO_DATA.skills[focusedIndex].name;
+    // Update Counter & Focused Name
+    if (this.focusedNameEl && PORTFOLIO_DATA.skills[this.currentIndex]) {
+      this.focusedNameEl.textContent = PORTFOLIO_DATA.skills[this.currentIndex].name;
     }
     if (this.slideNumEl) {
-      this.slideNumEl.textContent = String(focusedIndex + 1).padStart(2, "0");
+      this.slideNumEl.textContent = String(this.currentIndex + 1).padStart(2, "0");
     }
 
-    // Update dots
-    const dots = this.dotsContainer?.querySelectorAll(".skill-dot-indicator");
-    dots?.forEach((dot, idx) => {
-      dot.classList.toggle("active", idx === focusedIndex);
+    // Update Quick Jump Pills
+    const pills = this.pillsTrack?.querySelectorAll(".skill-pill-btn");
+    pills?.forEach((pill, idx) => {
+      pill.classList.toggle("active", idx === this.currentIndex);
     });
+
+    // Reset timer
+    this.timerStartTime = Date.now();
   }
 
-  startLoop() {
-    const animate = () => {
-      if (!this.isGridMode) {
-        if (this.isAutoSpinning && !this.isDragging) {
-          this.currentAngle -= this.autoRotateSpeed;
-          this.updateRingTransform();
-        } else if (!this.isDragging && Math.abs(this.targetAngle - this.currentAngle) > 0.1) {
-          // Smooth snap interpolation towards targetAngle
-          this.currentAngle += (this.targetAngle - this.currentAngle) * 0.1;
-          this.updateRingTransform();
+  flipNext() {
+    if (this.isAnimating || this.totalCards <= 1) return;
+    this.isAnimating = true;
+
+    const currentCard = this.cards[this.currentIndex];
+    currentCard.classList.add("is-exiting-left");
+
+    setTimeout(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.totalCards;
+      this.updateStackPositions();
+      this.isAnimating = false;
+    }, 280);
+  }
+
+  flipPrev() {
+    if (this.isAnimating || this.totalCards <= 1) return;
+    this.isAnimating = true;
+
+    const prevIndex = (this.currentIndex - 1 + this.totalCards) % this.totalCards;
+    const prevCard = this.cards[prevIndex];
+    prevCard.classList.add("is-exiting-right");
+
+    this.currentIndex = prevIndex;
+    this.updateStackPositions();
+
+    setTimeout(() => {
+      this.isAnimating = false;
+    }, 400);
+  }
+
+  jumpToCard(targetIndex) {
+    if (this.isAnimating || targetIndex === this.currentIndex) return;
+    this.isAnimating = true;
+
+    const currentCard = this.cards[this.currentIndex];
+    currentCard.classList.add("is-exiting-left");
+
+    setTimeout(() => {
+      this.currentIndex = targetIndex;
+      this.updateStackPositions();
+      this.isAnimating = false;
+    }, 260);
+  }
+
+  startProgressTimer() {
+    const loop = () => {
+      if (!this.isGridMode && this.isAutoSpinning && !this.isHovered && !this.isDragging) {
+        const elapsed = Date.now() - this.timerStartTime;
+        const progress = Math.min((elapsed / this.autoIntervalTime) * 100, 100);
+        
+        if (this.progressBar) {
+          this.progressBar.style.width = `${progress}%`;
         }
+
+        if (elapsed >= this.autoIntervalTime) {
+          this.flipNext();
+        }
+      } else if (this.isHovered || this.isDragging || !this.isAutoSpinning) {
+        this.timerStartTime = Date.now();
       }
-      this.animationFrameId = requestAnimationFrame(animate);
+
+      this.progressFrameId = requestAnimationFrame(loop);
     };
 
-    if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
-    this.animationFrameId = requestAnimationFrame(animate);
-  }
-
-  rotateToCard(index) {
-    this.pauseAutoSpinTemporarily();
-    this.targetAngle = -index * this.angleStep;
-  }
-
-  spinStep(direction) {
-    this.pauseAutoSpinTemporarily();
-    // Round to nearest card step then shift
-    let currentStep = Math.round(this.currentAngle / this.angleStep);
-    this.targetAngle = (currentStep + direction) * this.angleStep;
-  }
-
-  pauseAutoSpinTemporarily() {
-    if (this.resumeTimeout) clearTimeout(this.resumeTimeout);
-    const wasAuto = this.isAutoSpinning;
-    this.isAutoSpinning = false;
-
-    // Resume after 2.5 seconds of inactivity
-    this.resumeTimeout = setTimeout(() => {
-      if (wasAuto && !this.isDragging && !this.isGridMode) {
-        this.isAutoSpinning = true;
-      }
-    }, 2500);
+    if (this.progressFrameId) cancelAnimationFrame(this.progressFrameId);
+    this.progressFrameId = requestAnimationFrame(loop);
   }
 
   toggleAutoSpin() {
@@ -901,110 +970,148 @@ class Skills3DCylinderController {
       this.pulseDot.className = this.isAutoSpinning ? "w-2 h-2 rounded-full bg-cyan-400 animate-pulse" : "w-2 h-2 rounded-full bg-slate-500";
     }
     if (this.statusText) {
-      this.statusText.textContent = this.isAutoSpinning ? "3D Orbit: Active" : "3D Orbit: Paused";
+      this.statusText.textContent = this.isAutoSpinning ? "3D Auto-Stack: Active" : "3D Auto-Stack: Paused";
     }
     if (this.playIcon) {
       this.playIcon.setAttribute("data-lucide", this.isAutoSpinning ? "pause" : "play");
       PortfolioApp.refreshIcons();
     }
+    this.timerStartTime = Date.now();
   }
 
-  setupCardTilt(card) {
+  setupFrontCardTilt(card) {
     const glare = card.querySelector(".skill-3d-glare");
 
-    card.addEventListener("mousemove", (e) => {
+    const onMouseMove = (e) => {
+      if (this.isDragging) return;
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      const tiltX = ((y - centerY) / centerY) * -12;
-      const tiltY = ((x - centerX) / centerX) * 12;
+      const tiltX = ((y - centerY) / centerY) * -9;
+      const tiltY = ((x - centerX) / centerX) * 9;
 
-      // Keep original cylinder position and add subtle local tilt
-      const cardIndex = parseInt(card.getAttribute("data-card-index") || "0", 10);
-      const cardAngle = cardIndex * this.angleStep;
-      const radius = this.getRadius();
-
-      card.style.transform = `rotateY(${cardAngle}deg) translateZ(${radius}px) rotateX(${tiltX.toFixed(1)}deg) rotateY(${tiltY.toFixed(1)}deg) scale(1.02)`;
+      card.style.transform = `translate3d(0, 0, 0) rotateX(${tiltX.toFixed(1)}deg) rotateY(${tiltY.toFixed(1)}deg) scale(1.01)`;
 
       if (glare) {
-        glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.22), transparent 55%)`;
+        glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.22), transparent 60%)`;
         glare.style.opacity = "1";
       }
-    });
+    };
 
-    card.addEventListener("mouseleave", () => {
-      const cardIndex = parseInt(card.getAttribute("data-card-index") || "0", 10);
-      const cardAngle = cardIndex * this.angleStep;
-      const radius = this.getRadius();
-      card.style.transform = `rotateY(${cardAngle}deg) translateZ(${radius}px)`;
+    const onMouseLeave = () => {
+      if (this.isDragging) return;
+      card.style.transform = "";
       if (glare) glare.style.opacity = "0";
-    });
+    };
+
+    card.onmousemove = onMouseMove;
+    card.onmouseleave = onMouseLeave;
+  }
+
+  clearCardTilt(card) {
+    card.onmousemove = null;
+    card.onmouseleave = null;
+    card.style.transform = "";
+    const glare = card.querySelector(".skill-3d-glare");
+    if (glare) glare.style.opacity = "0";
   }
 
   bindEvents() {
-    // 1. Navigation buttons
-    this.prevBtn?.addEventListener("click", () => this.spinStep(1));
-    this.nextBtn?.addEventListener("click", () => this.spinStep(-1));
+    // 1. Buttons
+    this.nextBtn?.addEventListener("click", () => this.flipNext());
+    this.prevBtn?.addEventListener("click", () => this.flipPrev());
     this.autoplayBtn?.addEventListener("click", () => this.toggleAutoSpin());
 
-    // 2. Pause when hovering scene
-    this.scene?.addEventListener("mouseenter", () => {
-      if (this.isAutoSpinning) this.pauseAutoSpinTemporarily();
+    // 2. Pause on hover
+    this.viewport?.addEventListener("mouseenter", () => {
+      this.isHovered = true;
     });
 
-    // 3. Click card to bring to front
-    this.cards.forEach((card, index) => {
-      card.addEventListener("click", (e) => {
-        if (this.isDragging) return;
-        this.rotateToCard(index);
-      });
+    this.viewport?.addEventListener("mouseleave", () => {
+      this.isHovered = false;
+      this.timerStartTime = Date.now();
     });
 
-    // 4. Dot indicator clicks
-    this.dotsContainer?.addEventListener("click", (e) => {
-      const dot = e.target.closest(".skill-dot-indicator");
-      if (!dot) return;
-      const index = parseInt(dot.getAttribute("data-index"), 10);
-      if (!isNaN(index)) {
-        this.rotateToCard(index);
+    // 3. Click front or layer cards to flip
+    this.viewport?.addEventListener("click", (e) => {
+      if (this.isDragging) return;
+      const card = e.target.closest(".stack-card");
+      if (!card) return;
+
+      const depth = card.getAttribute("data-depth");
+      if (depth === "1" || depth === "0") {
+        this.flipNext();
+      } else if (depth === "2") {
+        this.flipNext();
+        setTimeout(() => this.flipNext(), 300);
       }
     });
 
-    // 5. Mouse & Touch Dragging physics
+    // 4. Quick Jump Pills
+    this.pillsTrack?.addEventListener("click", (e) => {
+      const pill = e.target.closest(".skill-pill-btn");
+      if (!pill) return;
+      const index = parseInt(pill.getAttribute("data-index"), 10);
+      if (!isNaN(index)) {
+        this.jumpToCard(index);
+      }
+    });
+
+    // 5. Keyboard Arrow Keys
+    window.addEventListener("keydown", (e) => {
+      const rect = this.stage?.getBoundingClientRect();
+      if (!rect) return;
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!isVisible || this.isGridMode) return;
+
+      if (e.key === "ArrowRight") {
+        this.flipNext();
+      } else if (e.key === "ArrowLeft") {
+        this.flipPrev();
+      }
+    });
+
+    // 6. Touch & Pointer Drag Gestures
     const handleDragStart = (clientX) => {
-      if (this.isGridMode) return;
+      if (this.isGridMode || this.isAnimating) return;
       this.isDragging = true;
       this.startX = clientX;
-      this.startAngle = this.currentAngle;
-      if (this.resumeTimeout) clearTimeout(this.resumeTimeout);
-      this.isAutoSpinning = false;
+      this.currentDragX = 0;
     };
 
     const handleDragMove = (clientX) => {
       if (!this.isDragging || this.isGridMode) return;
-      const deltaX = clientX - this.startX;
-      this.currentAngle = this.startAngle + deltaX * 0.38;
-      this.targetAngle = this.currentAngle;
-      this.updateRingTransform();
+      this.currentDragX = clientX - this.startX;
+      const frontCard = this.cards[this.currentIndex];
+      if (frontCard) {
+        const rot = this.currentDragX * 0.06;
+        frontCard.style.transform = `translate3d(${this.currentDragX}px, 0, 0) rotate(${rot}deg) scale(1)`;
+      }
     };
 
     const handleDragEnd = () => {
       if (!this.isDragging) return;
       this.isDragging = false;
-      // Snap to nearest card angle
-      let currentStep = Math.round(this.currentAngle / this.angleStep);
-      this.targetAngle = currentStep * this.angleStep;
-      this.pauseAutoSpinTemporarily();
+      const frontCard = this.cards[this.currentIndex];
+
+      if (this.currentDragX < -65) {
+        this.flipNext();
+      } else if (this.currentDragX > 65) {
+        this.flipPrev();
+      } else if (frontCard) {
+        frontCard.style.transform = "";
+      }
+      this.currentDragX = 0;
     };
 
-    this.scene?.addEventListener("mousedown", (e) => handleDragStart(e.clientX));
+    this.viewport?.addEventListener("mousedown", (e) => handleDragStart(e.clientX));
     window.addEventListener("mousemove", (e) => handleDragMove(e.clientX));
     window.addEventListener("mouseup", () => handleDragEnd());
 
-    this.scene?.addEventListener("touchstart", (e) => {
+    this.viewport?.addEventListener("touchstart", (e) => {
       if (e.touches.length === 1) handleDragStart(e.touches[0].clientX);
     }, { passive: true });
 
@@ -1014,14 +1121,9 @@ class Skills3DCylinderController {
 
     window.addEventListener("touchend", () => handleDragEnd());
 
-    // 6. View Mode Switcher
+    // 7. View Mode Switcher
     this.modeSphereBtn?.addEventListener("click", () => this.setGridMode(false));
     this.modeGridBtn?.addEventListener("click", () => this.setGridMode(true));
-
-    // 7. Resize handling
-    window.addEventListener("resize", () => {
-      this.layoutCards();
-    });
   }
 
   setGridMode(isGrid) {
@@ -1030,14 +1132,14 @@ class Skills3DCylinderController {
       if (isGrid) {
         this.viewWrapper.classList.add("hidden");
         this.gridWrapper.classList.remove("hidden");
-        if (this.modeSphereBtn) this.modeSphereBtn.className = "px-3 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5";
-        if (this.modeGridBtn) this.modeGridBtn.className = "px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5";
+        if (this.modeSphereBtn) this.modeSphereBtn.className = "px-3.5 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5";
+        if (this.modeGridBtn) this.modeGridBtn.className = "px-3.5 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5";
       } else {
         this.viewWrapper.classList.remove("hidden");
         this.gridWrapper.classList.add("hidden");
-        if (this.modeSphereBtn) this.modeSphereBtn.className = "px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5";
-        if (this.modeGridBtn) this.modeGridBtn.className = "px-3 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5";
-        this.layoutCards();
+        if (this.modeSphereBtn) this.modeSphereBtn.className = "px-3.5 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-500 to-cyan-500 text-white transition-all shadow-sm flex items-center gap-1.5";
+        if (this.modeGridBtn) this.modeGridBtn.className = "px-3.5 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5";
+        this.updateStackPositions();
       }
     }
   }
